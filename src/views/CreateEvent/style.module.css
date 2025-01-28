@@ -1,0 +1,156 @@
+.createEvent {
+  @apply flex flex-col;
+}
+
+.createEvent .header {
+  @apply pb-[26px] mx-[-32px] px-[32px] flex justify-between items-center border-b-[1px] border-b-[#363548];
+}
+
+.headerTitle {
+  color: white;
+  font-size: 36px;
+  font-weight: 700;
+}
+
+.createEvent .header .actions {
+  display: flex;
+  gap: 12px;
+}
+
+.createEvent .header .actions button,
+.createEvent .header .actions a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: white;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px; /* 125% */
+  letter-spacing: -0.16px;
+  padding: 14px 17px;
+  border-radius: 8px;
+}
+
+.form {
+}
+
+.formSection {
+  @apply flex flex-row  gap-[8px] justify-between py-[40px] border-b border-[#363548];
+}
+
+.formSectionLabelContainer {
+  @apply flex flex-1 flex-col gap-[8px] text-white;
+}
+.formSectionLabelContainer .title {
+  @apply text-white text-[22px] font-[500];
+}
+.formSectionLabelContainer .subtitle {
+  @apply text-white/60 text-[18px] font-[400];
+}
+
+.formSectionValueContainer {
+  @apply flex flex-col gap-[12px] w-[55%];
+}
+
+.eventTypeContainer {
+  @apply flex gap-[12px] rounded-[10px] p-[20px] border cursor-pointer;
+}
+.eventTypeLabelContainer {
+  @apply flex flex-col;
+}
+.eventTypeLabelContainer .title {
+  @apply text-white text-[16px] font-[500];
+}
+.eventTypeLabelContainer .subtitle {
+  @apply text-white/60 text-[18px] font-[400];
+}
+
+.inputGroup {
+  @apply flex flex-col gap-[14px] w-full;
+}
+.inputGroup .title {
+  @apply text-white text-[16px] font-[500];
+}
+.splitInputGroup {
+  @apply flex flex-row justify-between gap-[20px] w-full;
+}
+.splitInputGroup .inputGroup {
+  @apply flex-1;
+}
+
+.formFooter {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .createEvent {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    @apply flex flex-1 border-b-2 rounded-t-[12px] mx-[0px]
+      bg-[#201f34] border-[#29283c] h-full;
+  }
+  .createEvent .header {
+    @apply py-[20px] flex justify-center items-center bg-[#201f34];
+  }
+  .createEvent .header .actions {
+    display: none;
+  }
+  .headerTitle {
+    font-size: 20px;
+    font-weight: 500;
+  }
+
+  .formBodyWrapper {
+    @apply flex flex-1 overflow-y-auto;
+  }
+  .form {
+    @apply flex flex-col flex-1;
+    min-height: 1400px;
+  }
+
+  .formSection {
+    @apply flex flex-col items-center justify-between py-[20px] px-[20px] border-b border-[#363548];
+  }
+
+  .formSectionLabelContainer {
+    @apply flex flex-col gap-[8px] text-center py-[10px];
+  }
+  .formSectionLabelContainer .title {
+    @apply text-white text-[20px] font-[500];
+  }
+  .formSectionLabelContainer .subtitle {
+    @apply text-white/60 text-[12px] font-[400];
+  }
+
+  .formSectionValueContainer {
+    @apply flex flex-col gap-[12px] w-full;
+  }
+  .eventTypeContainer {
+    @apply flex gap-[12px] rounded-[10px] p-[10px_20px] border cursor-pointer;
+  }
+  .eventTypeLabelContainer {
+    @apply flex flex-col;
+  }
+  .eventTypeLabelContainer .title {
+    @apply text-white text-[13px] font-[400];
+  }
+  .eventTypeLabelContainer .subtitle {
+    @apply text-white/60 text-[12px] font-[400];
+  }
+
+  .inputGroup {
+    @apply flex flex-col gap-[14px] w-full;
+  }
+  .inputGroup .title {
+    @apply text-white text-[13px] font-[500];
+  }
+
+  .formFooter {
+    @apply flex flex-col w-full gap-[12px] py-[10px] text-[16px] font-[400] items-center;
+  }
+}
+
+input[type='time']::-webkit-calendar-picker-indicator {
+  filter: invert(100%) brightness(100%);
+}

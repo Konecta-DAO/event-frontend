@@ -1,0 +1,1952 @@
+type UserResponsePayload = 
+ record {
+   bio: text;
+   canister_id: text;
+   categories: vec text;
+   country: text;
+   coverphoto: text;
+   email: text;
+   firstname: text;
+   id: text;
+   introduction_video_link: text;
+   lastname: text;
+   principal_id: text;
+   profilepic: text;
+   timezone: text;
+   username: text;
+ };
+type UserFeedbackResponsePayload = 
+ record {
+   email: text;
+   event_id: text;
+   firstname: text;
+   id: text;
+   lastname: text;
+   rating: nat;
+   reason: text;
+   recording_link: text;
+   successful: text;
+   timezone: text;
+   user_id: text;
+   user_type: text;
+   username: text;
+ };
+type UserFeedbackRequestPayload = 
+ record {
+   email: text;
+   event_id: text;
+   firstname: text;
+   lastname: text;
+   rating: opt nat;
+   reason: opt text;
+   recording_link: opt text;
+   successful: FeedbackActions;
+   timezone: text;
+   username: text;
+ };
+type UserActionEmailResponse = 
+ record {
+   action: text;
+   event_id: text;
+   from: text;
+   from_user_id: text;
+   idempotency_key: text;
+   message_id: text;
+   template_name: text;
+   timestamp: nat;
+   to: text;
+   to_user_id: text;
+ };
+type UpdateOpsOutputType = 
+ variant {
+   AddAttributeOutput: AddAttributeOutputType;
+   CreateDatabaseOutput: CreateDatabaseOutputType;
+   CreateItemOutput: CreateItemOutputType;
+   CreateTableOutput: CreateTableOutputType;
+   DropAttributeOutput: DropAttributeOutputType;
+   UpdateItemOutput: UpdateItemOutputType;
+ };
+type UpdateOpsInputType = 
+ variant {
+   AddAttributeInput: AddAttributeInputType;
+   CreateDatabaseInput: CreateDatabaseInputType;
+   CreateItemInput: CreateItemInputType;
+   CreateTableInput: CreateTableInputType;
+   DropAttributeInput: DropAttributeInputType;
+   UpdateItemInput: UpdateItemInputType;
+ };
+type UpdateItemOutputType = 
+ variant {
+   err: vec text;
+   ok: record {
+         id: text;
+         item: vec record {
+                     text;
+                     AttributeDataValue__1;
+                   };
+       };
+ };
+type UpdateItemInputType = 
+ record {
+   attributeDataValues: vec record {
+                              text;
+                              AttributeDataValue__1;
+                            };
+   databaseName: text;
+   id: text;
+   tableName: text;
+ };
+type UpdateInformationRequest = record {
+                                  metrics: opt CollectMetricsRequestType;};
+type UpdateCallsAggregatedData = vec nat64;
+type TransformArgs = 
+ record {
+   context: blob;
+   response: HttpResponsePayload;
+ };
+type TransferRequestPayload = 
+ record {
+   amount: nat;
+   eventId: text;
+   fee: opt nat;
+   memo: opt blob;
+   priceToken: Token;
+ };
+type TransactionWithUserDataResponse = 
+ record {
+   amount: nat;
+   beneficiary_user_data: opt TransactionUser;
+   beneficiary_user_id: text;
+   block_index: nat;
+   created_at_time: nat64;
+   destination_account_id_hex: text;
+   eventData: FeedResponsePayloadWithoutUser;
+   event_id: text;
+   fee: nat;
+   memo: blob;
+   narration: text;
+   remitter_user_id: text;
+   source_account_id_hex: text;
+   transaction_id: text;
+   transferred_to_type: text;
+   url: text;
+ };
+type TransactionUser = 
+ record {
+   email: text;
+   firstname: text;
+   lastname: text;
+   username: text;
+ };
+type TransactionResponsePayload = 
+ record {
+   amount: nat;
+   beneficiary_user_id: text;
+   block_index: nat;
+   created_at_time: nat64;
+   destination_account_id_hex: text;
+   event_id: text;
+   fee: nat;
+   memo: blob;
+   narration: text;
+   remitter_user_id: text;
+   source_account_id_hex: text;
+   transaction_id: text;
+   transferred_to_type: text;
+ };
+type Token = 
+ variant {
+   CKBTC;
+   FREE;
+   ICP;
+ };
+type Timestamp = nat64;
+type TableMetadataOutputType = 
+ record {
+   attributes: vec AttributeMetadata;
+   indexes: vec TableIndexMetadata;
+ };
+type TableIndexMetadata = 
+ record {
+   attributeName: AttributeName;
+   name: IndexName;
+ };
+type StringAttributeDataValue = 
+ variant {
+   char: nat32;
+   "text": text;
+ };
+type StatusResponse = 
+ record {
+   cycles: opt nat64;
+   heap_memory_size: opt nat64;
+   memory_size: opt nat64;
+ };
+type StatusRequest = 
+ record {
+   cycles: bool;
+   heap_memory_size: bool;
+   memory_size: bool;
+ };
+type SortMultipleInputType = 
+ vec
+  record {
+    sortDirection: opt SortDirection;
+    sortKey: opt text;
+    sortKeyDataType: opt AttributeDataType__1;
+  };
+type SortDirection = 
+ variant {
+   asc;
+   desc;
+ };
+type SearchInputType = 
+ record {
+   foreignKeys: opt vec ForeignKeyInputType;
+   searchValue: opt text;
+ };
+type ScanOutputType__1 = 
+ variant {
+   err: vec text;
+   ok: vec ItemOutputType;
+ };
+type ScanOutputType = 
+ variant {
+   err: vec text;
+   ok: vec ItemOutputType;
+ };
+type ScanInputType = 
+ record {
+   databaseName: text;
+   filterExpressions: vec FilterExpressionType;
+   tableName: text;
+ };
+type ScanAndGetIdsOutputType = 
+ variant {
+   err: vec text;
+   ok: record {ids: vec text;};
+ };
+type ScanAndGetIdsInputType = 
+ record {
+   databaseName: text;
+   filterExpressions: vec FilterExpressionType;
+   tableName: text;
+ };
+type Result_9 = 
+ variant {
+   err: text;
+   ok: vec ProposalResponsePayload;
+ };
+type Result_8 = 
+ variant {
+   err: vec text;
+   ok: PaginatedFeedResponsePayload;
+ };
+type Result_7 = 
+ variant {
+   err: vec text;
+   ok: vec FeedResponsePayload;
+ };
+type Result_6 = 
+ variant {
+   err: text;
+   ok: vec FeedResponsePayload;
+ };
+type Result_5 = 
+ variant {
+   err: vec text;
+   ok: PaginatedTransactionWithUserDataResponse;
+ };
+type Result_4 = 
+ variant {
+   err: text;
+   ok: vec CreateUserFeedbackResponsePayload;
+ };
+type Result_3 = 
+ variant {
+   err: text;
+   ok: CreateUserFeedbackResponsePayload;
+ };
+type Result_29 = 
+ variant {
+   err: vec text;
+   ok: bool;
+ };
+type Result_28 = 
+ variant {
+   err: text;
+   ok: bool;
+ };
+type Result_27 = 
+ variant {
+   err: vec text;
+   ok: PaginatedEventResponsePayload;
+ };
+type Result_26 = 
+ variant {
+   err: text;
+   ok: PaginatedTransactionResponsePayload;
+ };
+type Result_25 = 
+ variant {
+   err: vec text;
+   ok: vec EventResponsePayload;
+ };
+type Result_24 = 
+ variant {
+   err: text;
+   ok: vec TransactionResponsePayload;
+ };
+type Result_23 = 
+ variant {
+   err: vec text;
+   ok: vec EventApplicationStatus;
+ };
+type Result_22 = 
+ variant {
+   err: vec text;
+   ok: PaginatedApplicationStatusOfMyCreatedEvents;
+ };
+type Result_21 = 
+ variant {
+   err: vec text;
+   ok: vec AppplicantIdsResponsePayload;
+ };
+type Result_20 = 
+ variant {
+   err: vec text;
+   ok: vec ApplicantsWithUserDataPayload;
+ };
+type Result_2 = 
+ variant {
+   err: vec LedgerIcrc1TransferError;
+   ok: text;
+ };
+type Result_19 = 
+ variant {
+   err: vec text;
+   ok: FeedDetailsPayload;
+ };
+type Result_18 = 
+ variant {
+   err: vec text;
+   ok: UserFeedbackResponsePayload;
+ };
+type Result_17 = 
+ variant {
+   err: vec text;
+   ok: EventResponsePayload;
+ };
+type Result_16 = 
+ variant {
+   err: vec text;
+   ok: vec EventCompletionResponsePayload;
+ };
+type Result_15 = 
+ variant {
+   err: vec text;
+   ok: vec ExpertFeedbackResponsePayload;
+ };
+type Result_14 = 
+ variant {
+   err: vec text;
+   ok: vec UserActionEmailResponse;
+ };
+type Result_13 = 
+ variant {
+   err: vec text;
+   ok: vec ForwardToExpertResponsePayload;
+ };
+type Result_12 = 
+ variant {
+   err: vec text;
+   ok: vec UserFeedbackResponsePayload;
+ };
+type Result_11 = 
+ variant {
+   err: text;
+   ok: nat;
+ };
+type Result_10 = 
+ variant {
+   err: text;
+   ok: PaginatedProposalResponsePayload;
+ };
+type Result_1 = 
+ variant {
+   err: LedgerIcrc2TransferError;
+   ok: text;
+ };
+type Result = 
+ variant {
+   err: text;
+   ok: text;
+ };
+type RemoveCalendarEvent = record {event_id: text;};
+type RelationalExpressionAttributeDataValue__1 = 
+ variant {
+   "blob": blob;
+   "bool": bool;
+   char: nat32;
+   float: float64;
+   "int": int;
+   "int16": int16;
+   "int32": int32;
+   "int64": int64;
+   "int8": int8;
+   "nat": nat;
+   "nat16": nat16;
+   "nat32": nat32;
+   "nat64": nat64;
+   "nat8": nat8;
+   "principal": principal;
+   "text": text;
+ };
+type RelationalExpressionAttributeDataValue = 
+ variant {
+   "blob": blob;
+   "bool": bool;
+   char: nat32;
+   float: float64;
+   "int": int;
+   "int16": int16;
+   "int32": int32;
+   "int64": int64;
+   "int8": int8;
+   "nat": nat;
+   "nat16": nat16;
+   "nat32": nat32;
+   "nat64": nat64;
+   "nat8": nat8;
+   "principal": principal;
+   "text": text;
+ };
+type RecordingVisibility = 
+ variant {
+   Private;
+   Public;
+ };
+type QueryOpsOutputType = 
+ variant {
+   BatchGetItemByIdOutput: BatchGetItemByIdOutputType;
+   GetDatabasesOutput: GetDatabasesOutputType;
+   GetItemByIdOutput: GetItemByIdOutputType;
+   GetItemCountOutput: GetItemCountOutputType;
+   GetTableMetadataOutput: GetTableMetadataOutputType__1;
+   PaginatedScanOutput: PaginatedScanOutputType;
+   ScanAndGetIdsOutput: ScanAndGetIdsOutputType;
+   ScanOutput: ScanOutputType;
+ };
+type QueryOpsInputType = 
+ variant {
+   BatchGetItemByIdInput: BatchGetItemByIdInputType;
+   GetDatabasesInput: GetDatabasesInputType;
+   GetItemByIdInput: GetItemByIdInputType;
+   GetItemCountInput: GetItemCountInputType;
+   GetTableMetadataInput: GetTableMetadataInputType;
+   PaginatedScanInput: PaginatedScanInputType;
+   ScanAndGetIdsInput: ScanAndGetIdsInputType;
+   ScanInput: ScanInputType;
+ };
+type ProposalResponsePayload = 
+ record {
+   action: text;
+   event_description: text;
+   event_id: text;
+   event_name: text;
+   location: text;
+   note: text;
+   updated_at: nat;
+   userData: UserResponsePayload;
+ };
+type ParticipationType = 
+ variant {
+   PersonToMultiplePersons;
+   PersonToPerson;
+ };
+type PaginatedTransactionWithUserDataResponse = 
+ record {
+   items: vec TransactionWithUserDataResponse;
+   limit: nat;
+   nonScannedItemCount: int;
+   offset: nat;
+   scannedItemCount: int;
+   totalRecords: nat;
+ };
+type PaginatedTransactionResponsePayload = 
+ record {
+   items: vec TransactionResponsePayload;
+   limit: nat;
+   nonScannedItemCount: int;
+   offset: nat;
+   scannedItemCount: int;
+   totalRecords: nat;
+ };
+type PaginatedScanOutputType = 
+ variant {
+   err: vec text;
+   ok:
+    record {
+      items: vec ItemOutputType;
+      limit: nat;
+      nonScannedItemCount: int;
+      offset: nat;
+      scannedItemCount: int;
+    };
+ };
+type PaginatedScanInputType = 
+ record {
+   databaseName: text;
+   filterExpressions: vec FilterExpressionType;
+   limit: nat;
+   offset: nat;
+   searchObject: opt SearchInputType;
+   sortObject: opt SortMultipleInputType;
+   tableName: text;
+ };
+type PaginatedProposalResponsePayload = 
+ record {
+   items: vec ProposalResponsePayload;
+   limit: nat;
+   nonScannedItemCount: int;
+   offset: nat;
+   scannedItemCount: int;
+   totalRecords: nat;
+ };
+type PaginatedFeedResponsePayload = 
+ record {
+   items: vec FeedResponsePayload;
+   limit: nat;
+   nonScannedItemCount: int;
+   offset: nat;
+   scannedItemCount: int;
+   totalRecords: nat;
+ };
+type PaginatedEventResponsePayload = 
+ record {
+   items: vec EventResponsePayload;
+   limit: nat;
+   nonScannedItemCount: int;
+   offset: nat;
+   scannedItemCount: int;
+   totalRecords: nat;
+ };
+type PaginatedApplicationStatusOfMyCreatedEvents = 
+ record {
+   items: vec ApplicationStatusOfMyCreatedEvents;
+   limit: nat;
+   nonScannedItemCount: int;
+   offset: nat;
+   scannedItemCount: int;
+   totalRecords: nat;
+ };
+type NumericEntity = 
+ record {
+   avg: nat64;
+   first: nat64;
+   last: nat64;
+   max: nat64;
+   min: nat64;
+ };
+type Nanos = nat64;
+type MoneyTransferActions = 
+ variant {
+   RefundToRemitter;
+   TransferToBeneficiary;
+ };
+type MissingFeedbackEvent = 
+ record {
+   end_date: nat;
+   event_id: text;
+   name: text;
+   start_date: nat;
+ };
+type MetricsResponse = record {metrics: opt CanisterMetrics;};
+type MetricsRequest = record {parameters: GetMetricsParameters;};
+type MetricsGranularity = 
+ variant {
+   daily;
+   hourly;
+ };
+type LogMessagesData = 
+ record {
+   message: text;
+   timeNanos: Nanos;
+ };
+type LedgerIcrc2TransferError = 
+ variant {
+   AddTxHistoryError: record {message: text;};
+   BadBurn: record {min_burn_amount: nat;};
+   BadFee: record {expected_fee: nat;};
+   CreateEventMetadataError: record {message: text;};
+   CreatedInFuture: record {ledger_time: nat64;};
+   Duplicate: record {duplicate_of: nat;};
+   FetchEventDetailsError: record {message: text;};
+   FetchTxHistoryError: record {message: text;};
+   GenericError: record {
+                   error_code: nat;
+                   message: text;
+                 };
+   InsufficientAllowance: record {allowance: nat;};
+   InsufficientFunds: record {balance: nat;};
+   TemporarilyUnavailable;
+   TooOld;
+ };
+type LedgerIcrc1TransferError = 
+ variant {
+   AddTxHistoryError: record {message: text;};
+   BadBurn: record {min_burn_amount: nat;};
+   BadFee: record {expected_fee: nat;};
+   CreatedInFuture: record {ledger_time: Timestamp;};
+   Duplicate: record {duplicate_of: nat;};
+   FetchEventDetailsError: record {message: text;};
+   FetchTxHistoryError: record {message: text;};
+   FreeEventError: record {message: text;};
+   GenericError: record {
+                   error_code: nat;
+                   message: text;
+                 };
+   GetAcceptedUserError: record {message: text;};
+   InsufficientFunds: record {balance: nat;};
+   SendEmailError: record {message: text;};
+   TemporarilyUnavailable;
+   TooOld;
+ };
+type ItemOutputType = 
+ record {
+   createdAt: int;
+   id: text;
+   item: vec record {
+               text;
+               AttributeDataValue__1;
+             };
+   updatedAt: int;
+ };
+type IndexName = text;
+type HttpResponsePayload = 
+ record {
+   body: vec nat8;
+   headers: vec HttpHeader;
+   status: nat;
+ };
+type HttpHeader = 
+ record {
+   name: text;
+   value: text;
+ };
+type HourlyMetricsData = 
+ record {
+   canisterCycles: CanisterCyclesAggregatedData;
+   canisterHeapMemorySize: CanisterHeapMemoryAggregatedData;
+   canisterMemorySize: CanisterMemoryAggregatedData;
+   timeMillis: int;
+   updateCalls: UpdateCallsAggregatedData;
+ };
+type GetTableMetadataOutputType__1 = 
+ opt
+  record {
+    databaseName: text;
+    metadata: TableMetadataOutputType;
+    tableName: text;
+  };
+type GetTableMetadataOutputType = 
+ opt
+  record {
+    databaseName: text;
+    metadata: TableMetadataOutputType;
+    tableName: text;
+  };
+type GetTableMetadataInputType = 
+ record {
+   databaseName: text;
+   tableName: text;
+ };
+type GetMetricsParameters = 
+ record {
+   dateFromMillis: nat;
+   dateToMillis: nat;
+   granularity: MetricsGranularity;
+ };
+type GetLogMessagesParameters = 
+ record {
+   count: nat32;
+   filter: opt GetLogMessagesFilter;
+   fromTimeNanos: opt Nanos;
+ };
+type GetLogMessagesFilter = 
+ record {
+   analyzeCount: nat32;
+   messageContains: opt text;
+   messageRegex: opt text;
+ };
+type GetLatestLogMessagesParameters = 
+ record {
+   count: nat32;
+   filter: opt GetLogMessagesFilter;
+   upToTimeNanos: opt Nanos;
+ };
+type GetItemCountOutputType = 
+ variant {
+   err: vec text;
+   ok: record {count: int;};
+ };
+type GetItemCountInputType = 
+ record {
+   databaseName: text;
+   tableName: text;
+ };
+type GetItemByIdOutputType = 
+ variant {
+   err: vec text;
+   ok: ItemOutputType;
+ };
+type GetItemByIdInputType = 
+ record {
+   databaseName: text;
+   id: text;
+   tableName: text;
+ };
+type GetInformationResponse = 
+ record {
+   logs: opt CanisterLogResponse;
+   metrics: opt MetricsResponse;
+   status: opt StatusResponse;
+   version: opt nat;
+ };
+type GetInformationRequest = 
+ record {
+   logs: opt CanisterLogRequest;
+   metrics: opt MetricsRequest;
+   status: opt StatusRequest;
+   version: bool;
+ };
+type GetDatabasesOutputType = record {
+                                databases:
+                                 vec record {
+                                       name: text;
+                                       tables: vec text;
+                                     };};
+type GetDatabasesInputType = record {};
+type ForwardToExpertResponsePayload = 
+ record {
+   event_id: text;
+   from: text;
+   id: text;
+   idempotency_key: text;
+   message_id: text;
+   template_name: text;
+   to: text;
+   user_feedback_id: text;
+ };
+type ForeignKeyInputType = 
+ record {
+   foreignKeyName: text;
+   primaryKeyTableName: text;
+ };
+type FilterExpressionType = 
+ record {
+   attributeName: text;
+   filterExpressionCondition: FilterExpressionConditionType;
+ };
+type FilterExpressionConditionType = 
+ variant {
+   BEGINS_WITH: StringAttributeDataValue;
+   BETWEEN:
+    record {
+      RelationalExpressionAttributeDataValue;
+      RelationalExpressionAttributeDataValue;
+    };
+   CONTAINS: ContaintmentExpressionAttributeDataValue;
+   EQ: RelationalExpressionAttributeDataValue;
+   EXISTS;
+   GT: RelationalExpressionAttributeDataValue;
+   GTE: RelationalExpressionAttributeDataValue;
+   IN: vec RelationalExpressionAttributeDataValue;
+   LIKE: vec RelationalExpressionAttributeDataValue;
+   LT: RelationalExpressionAttributeDataValue;
+   LTE: RelationalExpressionAttributeDataValue;
+   NEQ: RelationalExpressionAttributeDataValue;
+   NOT_BETWEEN:
+    record {
+      RelationalExpressionAttributeDataValue;
+      RelationalExpressionAttributeDataValue;
+    };
+   NOT_CONTAINS: ContaintmentExpressionAttributeDataValue;
+   NOT_EXISTS;
+ };
+type FeedbackActions = 
+ variant {
+   No;
+   Yes;
+ };
+type FeedResponsePayloadWithoutUser = 
+ record {
+   categories: vec text;
+   consultations: vec text;
+   coverphoto: text;
+   description: text;
+   end_date: nat;
+   eventMetadata:
+    vec
+     record {
+       text;
+       variant {
+         char: nat32;
+         float: float64;
+         "int": int;
+         "int16": int16;
+         "int32": int32;
+         "int64": int64;
+         "int8": int8;
+         list:
+          vec
+           variant {
+             char: nat32;
+             float: float64;
+             "int": int;
+             "int16": int16;
+             "int32": int32;
+             "int64": int64;
+             "int8": int8;
+             "nat": nat;
+             "nat16": nat16;
+             "nat32": nat32;
+             "nat64": nat64;
+             "nat8": nat8;
+             "text": text;
+           };
+         "nat": nat;
+         "nat16": nat16;
+         "nat32": nat32;
+         "nat64": nat64;
+         "nat8": nat8;
+         "text": text;
+       };
+     };
+   event_id: text;
+   event_type: text;
+   expertise: text;
+   interests: vec text;
+   is_recording_available: bool;
+   konectaMetadata:
+    vec
+     record {
+       text;
+       variant {
+         char: nat32;
+         float: float64;
+         "int": int;
+         "int16": int16;
+         "int32": int32;
+         "int64": int64;
+         "int8": int8;
+         list:
+          vec
+           variant {
+             char: nat32;
+             float: float64;
+             "int": int;
+             "int16": int16;
+             "int32": int32;
+             "int64": int64;
+             "int8": int8;
+             "nat": nat;
+             "nat16": nat16;
+             "nat32": nat32;
+             "nat64": nat64;
+             "nat8": nat8;
+             "text": text;
+           };
+         "nat": nat;
+         "nat16": nat16;
+         "nat32": nat32;
+         "nat64": nat64;
+         "nat8": nat8;
+         "text": text;
+       };
+     };
+   konecta_event_id: text;
+   language: text;
+   location: text;
+   name: text;
+   participation_type: text;
+   price_token: text;
+   recording_visibility: text;
+   showcase_link: text;
+   start_date: nat;
+   status: text;
+   subaccount_id_hex: text;
+   subaccount_id_index: nat;
+   token_amount: float64;
+   user_id: text;
+ };
+type FeedResponsePayload = 
+ record {
+   categories: vec text;
+   consultations: vec text;
+   coverphoto: text;
+   description: text;
+   end_date: nat;
+   eventMetadata:
+    vec
+     record {
+       text;
+       variant {
+         char: nat32;
+         float: float64;
+         "int": int;
+         "int16": int16;
+         "int32": int32;
+         "int64": int64;
+         "int8": int8;
+         list:
+          vec
+           variant {
+             char: nat32;
+             float: float64;
+             "int": int;
+             "int16": int16;
+             "int32": int32;
+             "int64": int64;
+             "int8": int8;
+             "nat": nat;
+             "nat16": nat16;
+             "nat32": nat32;
+             "nat64": nat64;
+             "nat8": nat8;
+             "text": text;
+           };
+         "nat": nat;
+         "nat16": nat16;
+         "nat32": nat32;
+         "nat64": nat64;
+         "nat8": nat8;
+         "text": text;
+       };
+     };
+   event_id: text;
+   event_type: text;
+   expertise: text;
+   interests: vec text;
+   is_recording_available: bool;
+   konectaMetadata:
+    vec
+     record {
+       text;
+       variant {
+         char: nat32;
+         float: float64;
+         "int": int;
+         "int16": int16;
+         "int32": int32;
+         "int64": int64;
+         "int8": int8;
+         list:
+          vec
+           variant {
+             char: nat32;
+             float: float64;
+             "int": int;
+             "int16": int16;
+             "int32": int32;
+             "int64": int64;
+             "int8": int8;
+             "nat": nat;
+             "nat16": nat16;
+             "nat32": nat32;
+             "nat64": nat64;
+             "nat8": nat8;
+             "text": text;
+           };
+         "nat": nat;
+         "nat16": nat16;
+         "nat32": nat32;
+         "nat64": nat64;
+         "nat8": nat8;
+         "text": text;
+       };
+     };
+   konecta_event_id: text;
+   language: text;
+   location: text;
+   name: text;
+   participation_type: text;
+   price_token: text;
+   recording_visibility: text;
+   showcase_link: text;
+   start_date: nat;
+   status: text;
+   subaccount_id_hex: text;
+   subaccount_id_index: nat;
+   token_amount: float64;
+   userData: UserResponsePayload;
+   user_id: text;
+ };
+type FeedRequestPayload = 
+ record {
+   categories: vec text;
+   currentTimestamp: nat;
+   limit: nat;
+   offset: nat;
+   recordingType: vec bool;
+   searchValue: opt text;
+   timezone: opt text;
+ };
+type FeedDetailsPayload = 
+ record {
+   categories: vec text;
+   consultations: vec text;
+   coverphoto: text;
+   description: text;
+   end_date: nat;
+   eventMetadata:
+    vec
+     record {
+       text;
+       variant {
+         char: nat32;
+         float: float64;
+         "int": int;
+         "int16": int16;
+         "int32": int32;
+         "int64": int64;
+         "int8": int8;
+         list:
+          vec
+           variant {
+             char: nat32;
+             float: float64;
+             "int": int;
+             "int16": int16;
+             "int32": int32;
+             "int64": int64;
+             "int8": int8;
+             "nat": nat;
+             "nat16": nat16;
+             "nat32": nat32;
+             "nat64": nat64;
+             "nat8": nat8;
+             "text": text;
+           };
+         "nat": nat;
+         "nat16": nat16;
+         "nat32": nat32;
+         "nat64": nat64;
+         "nat8": nat8;
+         "text": text;
+       };
+     };
+   event_id: text;
+   event_type: text;
+   expertise: text;
+   interests: vec text;
+   is_recording_available: bool;
+   konectaMetadata:
+    vec
+     record {
+       text;
+       variant {
+         char: nat32;
+         float: float64;
+         "int": int;
+         "int16": int16;
+         "int32": int32;
+         "int64": int64;
+         "int8": int8;
+         list:
+          vec
+           variant {
+             char: nat32;
+             float: float64;
+             "int": int;
+             "int16": int16;
+             "int32": int32;
+             "int64": int64;
+             "int8": int8;
+             "nat": nat;
+             "nat16": nat16;
+             "nat32": nat32;
+             "nat64": nat64;
+             "nat8": nat8;
+             "text": text;
+           };
+         "nat": nat;
+         "nat16": nat16;
+         "nat32": nat32;
+         "nat64": nat64;
+         "nat8": nat8;
+         "text": text;
+       };
+     };
+   konecta_event_id: text;
+   language: text;
+   location: text;
+   name: text;
+   participation_type: text;
+   price_token: text;
+   recording_link: text;
+   recording_visibility: text;
+   showcase_link: text;
+   start_date: nat;
+   status: text;
+   subaccount_id_hex: text;
+   subaccount_id_index: nat;
+   token_amount: float64;
+   userData: UserResponsePayload;
+   user_id: text;
+ };
+type ExpertFeedbackResponsePayload = 
+ record {
+   agreeWithUserFeedback: text;
+   event_id: text;
+   event_recording_link: text;
+   reason: text;
+   remitter_feedback_missing: bool;
+   transfer_or_refund: text;
+   user_feedback: opt UserFeedbackResponsePayload;
+   user_feedback_id: text;
+   user_id: text;
+ };
+type ExpertFeedbackRequestPayload = 
+ record {
+   agreeWithUserFeedback: opt FeedbackActions;
+   event_id: text;
+   event_recording_link: opt text;
+   reason: opt text;
+   remitter_feedback_missing: bool;
+   transfer_or_refund: opt MoneyTransferActions;
+   user_feedback_id: opt text;
+   user_id: opt text;
+ };
+type EventWithUserDataTupleArray = 
+ vec record {
+       text;
+       EventProtocolCanisterPayload;
+     };
+type EventType = 
+ variant {
+   Offer;
+   Request;
+ };
+type EventStatus = 
+ variant {
+   Canceled;
+   Created;
+   Draft;
+ };
+type EventResponsePayload = 
+ record {
+   categories: vec text;
+   consultations: vec text;
+   end_date: nat;
+   event_description: text;
+   event_id: text;
+   event_name: text;
+   event_type: text;
+   expertise: text;
+   interests: vec text;
+   is_recording_available: bool;
+   konecta_event_id: text;
+   metadata:
+    vec
+     record {
+       text;
+       variant {
+         char: nat32;
+         float: float64;
+         "int": int;
+         "int16": int16;
+         "int32": int32;
+         "int64": int64;
+         "int8": int8;
+         list:
+          vec
+           variant {
+             char: nat32;
+             float: float64;
+             "int": int;
+             "int16": int16;
+             "int32": int32;
+             "int64": int64;
+             "int8": int8;
+             "nat": nat;
+             "nat16": nat16;
+             "nat32": nat32;
+             "nat64": nat64;
+             "nat8": nat8;
+             "text": text;
+           };
+         "nat": nat;
+         "nat16": nat16;
+         "nat32": nat32;
+         "nat64": nat64;
+         "nat8": nat8;
+         "text": text;
+       };
+     };
+   participation_type: text;
+   price_token: text;
+   recording_visibility: text;
+   showcase_link: text;
+   start_date: nat;
+   status: text;
+   subaccount_id_hex: text;
+   subaccount_id_index: nat;
+   token_amount: float64;
+   user_id: text;
+ };
+type EventRequestPayload = 
+ record {
+   categories: vec text;
+   consultations: opt vec text;
+   end_date: nat;
+   event_description: text;
+   event_id: text;
+   event_name: text;
+   event_type: EventType;
+   expertise: opt text;
+   interests: opt vec text;
+   is_recording_available: opt bool;
+   metadata:
+    opt
+     vec
+      record {
+        text;
+        variant {
+          char: nat32;
+          float: float64;
+          "int": int;
+          "int16": int16;
+          "int32": int32;
+          "int64": int64;
+          "int8": int8;
+          list:
+           vec
+            variant {
+              char: nat32;
+              float: float64;
+              "int": int;
+              "int16": int16;
+              "int32": int32;
+              "int64": int64;
+              "int8": int8;
+              "nat": nat;
+              "nat16": nat16;
+              "nat32": nat32;
+              "nat64": nat64;
+              "nat8": nat8;
+              "text": text;
+            };
+          "nat": nat;
+          "nat16": nat16;
+          "nat32": nat32;
+          "nat64": nat64;
+          "nat8": nat8;
+          "text": text;
+        };
+      };
+   participation_type: opt ParticipationType;
+   price_token: opt Token;
+   recording_visibility: opt RecordingVisibility;
+   showcase_link: opt text;
+   start_date: nat;
+   status: EventStatus;
+   token_amount: opt float64;
+   user_id: opt text;
+ };
+type EventProtocolCanisterPayload = 
+ record {
+   coverphoto: text;
+   description: text;
+   end_date: nat;
+   event_id: text;
+   language: text;
+   location: text;
+   metadata:
+    vec
+     record {
+       text;
+       variant {
+         char: nat32;
+         float: float64;
+         "int": int;
+         "int16": int16;
+         "int32": int32;
+         "int64": int64;
+         "int8": int8;
+         list:
+          vec
+           variant {
+             char: nat32;
+             float: float64;
+             "int": int;
+             "int16": int16;
+             "int32": int32;
+             "int64": int64;
+             "int8": int8;
+             "nat": nat;
+             "nat16": nat16;
+             "nat32": nat32;
+             "nat64": nat64;
+             "nat8": nat8;
+             "text": text;
+           };
+         "nat": nat;
+         "nat16": nat16;
+         "nat32": nat32;
+         "nat64": nat64;
+         "nat8": nat8;
+         "text": text;
+       };
+     };
+   name: text;
+   start_date: nat;
+   status: text;
+   userData: UserResponsePayload;
+   user_id: text;
+ };
+type EventCompletionResponsePayload = 
+ record {
+   event_id: text;
+   from: text;
+   id: text;
+   idempotency_key: text;
+   message_id: text;
+   notification_type: text;
+   recipient_type: text;
+   template_name: text;
+   to: text;
+   user_id: text;
+   user_type: text;
+ };
+type EventCanisterResponseWithoutUser = 
+ record {
+   coverphoto: text;
+   description: text;
+   end_date: nat;
+   event_id: text;
+   language: text;
+   location: text;
+   metadata:
+    vec
+     record {
+       text;
+       variant {
+         char: nat32;
+         float: float64;
+         "int": int;
+         "int16": int16;
+         "int32": int32;
+         "int64": int64;
+         "int8": int8;
+         list:
+          vec
+           variant {
+             char: nat32;
+             float: float64;
+             "int": int;
+             "int16": int16;
+             "int32": int32;
+             "int64": int64;
+             "int8": int8;
+             "nat": nat;
+             "nat16": nat16;
+             "nat32": nat32;
+             "nat64": nat64;
+             "nat8": nat8;
+             "text": text;
+           };
+         "nat": nat;
+         "nat16": nat16;
+         "nat32": nat32;
+         "nat64": nat64;
+         "nat8": nat8;
+         "text": text;
+       };
+     };
+   name: text;
+   start_date: nat;
+   status: text;
+   user_id: text;
+ };
+type EventAttendeeActions = 
+ variant {
+   Accepted;
+   Applied;
+   Declined;
+   Invited;
+   Joined;
+   Withdrawn;
+ };
+type EventApplicationStatusWithCanister = 
+ record {
+   action: text;
+   applied_user_id: text;
+   user_canister_id: text;
+ };
+type EventApplicationStatus = 
+ record {
+   applied_users: vec EventApplicationStatusWithCanister;
+   event_id: text;
+ };
+type EmailResponse = 
+ record {
+   idempotency_key: text;
+   message_id: text;
+ };
+type DropAttributeOutputType = 
+ variant {
+   err: vec text;
+   ok: record {
+         attributeName: text;
+         databaseName: text;
+         tableName: text;
+       };
+ };
+type DropAttributeInputType = 
+ record {
+   attributeName: text;
+   databaseName: text;
+   tableName: text;
+ };
+type DailyMetricsData = 
+ record {
+   canisterCycles: NumericEntity;
+   canisterHeapMemorySize: NumericEntity;
+   canisterMemorySize: NumericEntity;
+   timeMillis: int;
+   updateCalls: nat64;
+ };
+type CreateUserFeedbackResponsePayload = 
+ record {
+   feedbackId: text;
+   konectaEventData: EventResponsePayload;
+ };
+type CreateTableOutputType = 
+ variant {
+   err: vec text;
+   ok: record {};
+ };
+type CreateTableInputType = 
+ record {
+   attributes: vec AttributeMetadata;
+   databaseName: text;
+   indexes: vec TableIndexMetadata;
+   name: text;
+ };
+type CreateItemOutputType = 
+ variant {
+   err: vec text;
+   ok: record {
+         id: text;
+         item: vec record {
+                     text;
+                     AttributeDataValue__1;
+                   };
+       };
+ };
+type CreateItemInputType = 
+ record {
+   attributeDataValues: vec record {
+                              text;
+                              AttributeDataValue__1;
+                            };
+   databaseName: text;
+   tableName: text;
+ };
+type CreateDatabaseOutputType = 
+ variant {
+   err: vec text;
+   ok: record {};
+ };
+type CreateDatabaseInputType = record {name: text;};
+type ContaintmentExpressionAttributeDataValue = 
+ variant {
+   char: nat32;
+   list:
+    vec
+     variant {
+       char: nat32;
+       float: float64;
+       "int": int;
+       "int16": int16;
+       "int32": int32;
+       "int64": int64;
+       "int8": int8;
+       "nat": nat;
+       "nat16": nat16;
+       "nat32": nat32;
+       "nat64": nat64;
+       "nat8": nat8;
+       "text": text;
+     };
+   "text": text;
+ };
+type CollectMetricsRequestType = 
+ variant {
+   force;
+   normal;
+ };
+type CheckEventExistsPayload = 
+ record {
+   end_date: nat;
+   event_type: EventType;
+   start_date: nat;
+ };
+type CanisterMetricsData = 
+ variant {
+   daily: vec DailyMetricsData;
+   hourly: vec HourlyMetricsData;
+ };
+type CanisterMetrics = record {data: CanisterMetricsData;};
+type CanisterMemoryAggregatedData = vec nat64;
+type CanisterLogResponse = 
+ variant {
+   messages: CanisterLogMessages;
+   messagesInfo: CanisterLogMessagesInfo;
+ };
+type CanisterLogRequest = 
+ variant {
+   getLatestMessages: GetLatestLogMessagesParameters;
+   getMessages: GetLogMessagesParameters;
+   getMessagesInfo;
+ };
+type CanisterLogMessagesInfo = 
+ record {
+   count: nat32;
+   features: vec opt CanisterLogFeature;
+   firstTimeNanos: opt Nanos;
+   lastTimeNanos: opt Nanos;
+ };
+type CanisterLogMessages = 
+ record {
+   data: vec LogMessagesData;
+   lastAnalyzedMessageTimeNanos: opt Nanos;
+ };
+type CanisterLogFeature = 
+ variant {
+   filterMessageByContains;
+   filterMessageByRegex;
+ };
+type CanisterHeapMemoryAggregatedData = vec nat64;
+type CanisterCyclesAggregatedData = vec nat64;
+type BatchGetItemByIdOutputType = 
+ variant {
+   err: vec text;
+   ok: record {
+         items: vec ItemOutputType;
+         notFoundIds: vec text;
+       };
+ };
+type BatchGetItemByIdInputType = 
+ record {
+   databaseName: text;
+   ids: vec text;
+   tableName: text;
+ };
+type AttributeName = text;
+type AttributeMetadata = 
+ record {
+   dataType: AttributeDataType;
+   defaultValue: AttributeDataValue;
+   name: AttributeName;
+   required: bool;
+   unique: bool;
+ };
+type AttributeDataValue__1 = 
+ variant {
+   "blob": blob;
+   "bool": bool;
+   char: nat32;
+   default;
+   float: float64;
+   "int": int;
+   "int16": int16;
+   "int32": int32;
+   "int64": int64;
+   "int8": int8;
+   list:
+    vec
+     variant {
+       char: nat32;
+       float: float64;
+       "int": int;
+       "int16": int16;
+       "int32": int32;
+       "int64": int64;
+       "int8": int8;
+       "nat": nat;
+       "nat16": nat16;
+       "nat32": nat32;
+       "nat64": nat64;
+       "nat8": nat8;
+       "text": text;
+     };
+   map:
+    vec
+     record {
+       text;
+       variant {
+         char: nat32;
+         float: float64;
+         "int": int;
+         "int16": int16;
+         "int32": int32;
+         "int64": int64;
+         "int8": int8;
+         list:
+          vec
+           variant {
+             char: nat32;
+             float: float64;
+             "int": int;
+             "int16": int16;
+             "int32": int32;
+             "int64": int64;
+             "int8": int8;
+             "nat": nat;
+             "nat16": nat16;
+             "nat32": nat32;
+             "nat64": nat64;
+             "nat8": nat8;
+             "text": text;
+           };
+         "nat": nat;
+         "nat16": nat16;
+         "nat32": nat32;
+         "nat64": nat64;
+         "nat8": nat8;
+         "text": text;
+       };
+     };
+   "nat": nat;
+   "nat16": nat16;
+   "nat32": nat32;
+   "nat64": nat64;
+   "nat8": nat8;
+   "principal": principal;
+   "text": text;
+ };
+type AttributeDataValue = 
+ variant {
+   "blob": blob;
+   "bool": bool;
+   char: nat32;
+   default;
+   float: float64;
+   "int": int;
+   "int16": int16;
+   "int32": int32;
+   "int64": int64;
+   "int8": int8;
+   list:
+    vec
+     variant {
+       char: nat32;
+       float: float64;
+       "int": int;
+       "int16": int16;
+       "int32": int32;
+       "int64": int64;
+       "int8": int8;
+       "nat": nat;
+       "nat16": nat16;
+       "nat32": nat32;
+       "nat64": nat64;
+       "nat8": nat8;
+       "text": text;
+     };
+   map:
+    vec
+     record {
+       text;
+       variant {
+         char: nat32;
+         float: float64;
+         "int": int;
+         "int16": int16;
+         "int32": int32;
+         "int64": int64;
+         "int8": int8;
+         list:
+          vec
+           variant {
+             char: nat32;
+             float: float64;
+             "int": int;
+             "int16": int16;
+             "int32": int32;
+             "int64": int64;
+             "int8": int8;
+             "nat": nat;
+             "nat16": nat16;
+             "nat32": nat32;
+             "nat64": nat64;
+             "nat8": nat8;
+             "text": text;
+           };
+         "nat": nat;
+         "nat16": nat16;
+         "nat32": nat32;
+         "nat64": nat64;
+         "nat8": nat8;
+         "text": text;
+       };
+     };
+   "nat": nat;
+   "nat16": nat16;
+   "nat32": nat32;
+   "nat64": nat64;
+   "nat8": nat8;
+   "principal": principal;
+   "text": text;
+ };
+type AttributeDataType__1 = 
+ variant {
+   "blob";
+   "bool";
+   char;
+   default;
+   float;
+   "int";
+   "int16";
+   "int32";
+   "int64";
+   "int8";
+   list;
+   map;
+   "nat";
+   "nat16";
+   "nat32";
+   "nat64";
+   "nat8";
+   "principal";
+   "text";
+ };
+type AttributeDataType = 
+ variant {
+   "blob";
+   "bool";
+   char;
+   default;
+   float;
+   "int";
+   "int16";
+   "int32";
+   "int64";
+   "int8";
+   list;
+   map;
+   "nat";
+   "nat16";
+   "nat32";
+   "nat64";
+   "nat8";
+   "principal";
+   "text";
+ };
+type AppplicantIdsResponsePayload = 
+ record {
+   action: text;
+   applied_user_id: text;
+   id: text;
+   location: text;
+   note: text;
+   timestamp: nat;
+ };
+type ApplyToServiceRequestPayload = 
+ record {
+   event_id: text;
+   location: text;
+   note: text;
+ };
+type ApplicationStatusOfMyCreatedEvents = 
+ record {
+   applied_users_details: vec AppplicantIdsResponsePayload;
+   event_description: text;
+   event_id: text;
+   event_name: text;
+ };
+type ApplicantsWithUserDataPayload = 
+ record {
+   location: text;
+   note: text;
+   userData: UserResponsePayload;
+ };
+type AddAttributeOutputType = 
+ variant {
+   err: vec text;
+   ok: record {
+         attributeName: text;
+         databaseName: text;
+         tableName: text;
+       };
+ };
+type AddAttributeInputType = 
+ record {
+   attribute: AttributeMetadata;
+   databaseName: text;
+   tableName: text;
+ };
+service : {
+  acceptUserApplication: (text, text) -> (Result);
+  applyToServiceRequest: (ApplyToServiceRequestPayload) -> (Result);
+  cancelKonectaEvent: (text) -> (Result);
+  cancelKonectaEventTest: (text, text) -> (Result);
+  checkFeedbackByUserForEvent: (text, text,
+   vec RelationalExpressionAttributeDataValue__1) -> (bool) query;
+  checkIfAcceptedUserExistsForEvent: (text) -> (bool) query;
+  checkIfEventExistsForTheDay: (CheckEventExistsPayload) -> (Result_29) query;
+  checkIfEventExistsForTheDayTest: (text, CheckEventExistsPayload) ->
+   (Result_29) query;
+  checkIfEventIsCanceled: (text) -> (Result_28) query;
+  checkIfUserFeedbackExistsForEvent: (text) -> (Result_28) query;
+  checkIfUserFeedbackExistsForEventTest: (text, text) -> (Result_28) query;
+  checkIfUserIsOfferAttendee: (principal, text) -> (bool) composite_query;
+  checkIfUserIsOfferAttendeeOrRequestAcceptedUser: (principal, text) ->
+   (bool) composite_query;
+  createKonectaEvent: (text, EventRequestPayload) -> (Result);
+  declineUserApplication: (text, text) -> (Result);
+  eventCompletionNotificationTableMetadata: () ->
+   (GetTableMetadataOutputType) query;
+  expertEmailTableMetadata: () -> (GetTableMetadataOutputType) query;
+  expertFeedbackTableMetadata: () -> (GetTableMetadataOutputType) query;
+  generateFeedResponse: (Result_25) -> (Result_7) composite_query;
+  generatePaginatedFeedResponse: (Result_27) -> (Result_8) composite_query;
+  generateSchema: () -> (text);
+  generateTransactionResponse: (Result_26) -> (Result_5) composite_query;
+  getAllFutureOffers: (FeedRequestPayload) -> (Result_8) composite_query;
+  getAllFutureRequests: (FeedRequestPayload) -> (Result_8) composite_query;
+  getAllKonectAEvents: () -> (Result_25) query;
+  getAllPaginatedTransactions: (nat, nat) -> (Result_5) composite_query;
+  getAllPastOffers: (FeedRequestPayload) -> (Result_8) composite_query;
+  getAllPastRequests: (FeedRequestPayload) -> (Result_8) composite_query;
+  getAllTransactions: () -> (Result_24) query;
+  getApplicationStatusForEvents: () -> (Result_23) composite_query;
+  getApplicationStatusForEventsTest: (text) -> (Result_23) composite_query;
+  getApplicationStatusOfMyCreatedEvents: (nat, nat) ->
+   (Result_22) composite_query;
+  getApplicationStatusOfMyCreatedEventsTest: (text, nat, nat) ->
+   (Result_22) composite_query;
+  getAppliedUsersByActionForEvent: (text, vec EventAttendeeActions) ->
+   (Result_21) query;
+  getAppliedUsersByActionWithUserData: (text, vec EventAttendeeActions) ->
+   (Result_20) composite_query;
+  getCanistergeekInformation: (GetInformationRequest) ->
+   (GetInformationResponse) query;
+  getDefaultAccountIdentifier: () -> (text) query;
+  getDefaultAccountIdentifierTest: (text) -> (text) query;
+  getEventArrayFromEventIdArray: (vec EventResponsePayload) ->
+   (EventWithUserDataTupleArray) composite_query;
+  getEventCanisterDetailsByCompositeQuery: (text) ->
+   (EventCanisterResponseWithoutUser) composite_query;
+  getFeedDetailsByEventId: (text) -> (Result_19) composite_query;
+  getFeedbackById: (text) -> (Result_18) query;
+  getKonectaEventDetailsByEventId: (text) -> (Result_17) query;
+  getKonectaEventTableMetadata: () -> (GetTableMetadataOutputType) query;
+  getLedgerAccount: (text, opt text) -> (text) query;
+  getListOfEventCompletionEmails: () -> (Result_16) query;
+  getListOfExpertFeedbacks: () -> (Result_15) query;
+  getListOfMissingFeedbackEvents: () -> (Result_7) composite_query;
+  getListOfMissingFeedbackEventsTest: (text) -> (Result_7) composite_query;
+  getListOfUserActionEmails: () -> (Result_14) query;
+  getListOfUserFeedbackForwardedEmailsToExpert: () -> (Result_13) query;
+  getListOfUserFeedbacks: () -> (Result_12) query;
+  getMissingFeedbackEventArray: (vec text) ->
+   (vec MissingFeedbackEvent) composite_query;
+  getMyJoinedEvents: () -> (Result_7) composite_query;
+  getMyJoinedEventsCount: () -> (Result_11) composite_query;
+  getMyPaginatedProposals: (nat, nat) -> (Result_10) composite_query;
+  getMyPaginatedProposalsTest: (text, nat, nat) ->
+   (Result_10) composite_query;
+  getMyProposals: () -> (Result_9);
+  getMyProposalsTest: (text) -> (Result_9);
+  getMyServiceOffers: () -> (Result_7);
+  getMyServiceOffersTest: (text) -> (Result_7);
+  getMyServiceOffersUntransformed: (text) -> (ScanOutputType__1) query;
+  getMyServiceRequests: () -> (Result_7);
+  getMyServiceRequestsTest: (text) -> (Result_7);
+  getMyServiceRequestsUntransformed: (text) -> (ScanOutputType__1) query;
+  getPaginatedJoinedOffersForMyProfile: (nat, nat) ->
+   (Result_8) composite_query;
+  getPaginatedJoinedOffersForMyProfileTest: (text, nat, nat) ->
+   (Result_8) composite_query;
+  getPaginatedJoinedRequestsForMyProfile: (nat, nat) ->
+   (Result_8) composite_query;
+  getPaginatedJoinedRequestsForMyProfileTest: (text, nat, nat) ->
+   (Result_8) composite_query;
+  getPaginatedServiceOffersForMyProfile: (nat, nat) ->
+   (Result_8) composite_query;
+  getPaginatedServiceOffersForMyProfileTest: (text, nat, nat) ->
+   (Result_8) composite_query;
+  getPaginatedServiceRequestsForMyProfile: (nat, nat) ->
+   (Result_8) composite_query;
+  getPaginatedServiceRequestsForMyProfileTest: (text, nat, nat) ->
+   (Result_8) composite_query;
+  getPrincipal: (text) -> (principal) query;
+  getServiceOffersApartFromMe: () -> (Result_7);
+  getServiceOffersApartFromMeTest: (text) -> (Result_7);
+  getServiceOffersApartFromMeUntransformed: (text) ->
+   (ScanOutputType__1) query;
+  getServiceOffersForMyProfile: () -> (Result_6);
+  getServiceOffersForMyProfileTest: (text) -> (Result_6);
+  getServiceRequestsApartFromMe: () -> (Result_7);
+  getServiceRequestsApartFromMeTest: (text) -> (Result_7);
+  getServiceRequestsApartFromMeUntransformed: (text) ->
+   (ScanOutputType__1) query;
+  getServiceRequestsForMyProfile: () -> (Result_6);
+  getServiceRequestsForMyProfileTest: (text) -> (Result_6);
+  getSubAccountIdBlobFromIndexForPrincipal: (text, nat) -> (blob) query;
+  getSubAccountIdFromIndex: (nat) -> (text) query;
+  getSubAccountIdFromIndexForPrincipal: (text, nat) -> (text) query;
+  getTransactionTableMetadata: () -> (GetTableMetadataOutputType) query;
+  getTransactionsForEventByType: (nat, nat, text, text) ->
+   (Result_5) composite_query;
+  getTransactionsForUser: (nat, nat) -> (Result_5) composite_query;
+  getTransactionsForUserByType: (nat, nat, text) ->
+   (Result_5) composite_query;
+  getTransactionsForUserByTypeTest: (nat, nat, text, text) ->
+   (Result_5) composite_query;
+  getTransactionsForUserTest: (nat, nat, text) -> (Result_5) composite_query;
+  getUserDetailsByCompositeQuery: (text) ->
+   (UserResponsePayload) composite_query;
+  getUserFeedbackTableMetadata: () -> (GetTableMetadataOutputType) query;
+  getUserStatusForEvent: (text) -> (text) composite_query;
+  getUserStatusForServiceOffers: (principal, text) -> (text) composite_query;
+  getUserStatusForServiceRequests: (principal, text) -> (text) query;
+  get_trusted_origins: () -> (vec text) query;
+  icrc28_trusted_origins: () -> (record {trusted_origins: vec text;}) query;
+  insertExpertFeedback: (ExpertFeedbackRequestPayload) -> (Result);
+  insertMultipleUserFeedback: (vec UserFeedbackRequestPayload) -> (Result_4);
+  insertMultipleUserFeedbackTest: (text, vec UserFeedbackRequestPayload) ->
+   (Result_4);
+  insertUserFeedback: (UserFeedbackRequestPayload) -> (Result_3);
+  insertUserFeedbackTest: (text, UserFeedbackRequestPayload) -> (Result_3);
+  isWhiteListUser: (text) -> (bool);
+  joinPublicEvent: (text) -> (Result);
+  queryOperation: (record {queryOpsInput: QueryOpsInputType;}) ->
+   (QueryOpsOutputType) query;
+  resolutionResponseTableMetadata: () -> (GetTableMetadataOutputType) query;
+  runMoneyTransferJob: () -> (Result);
+  runMoneyTransferJobForHoursTest: (nat) -> (Result);
+  runMoneyTransferTestForEvent: (text) -> (Result);
+  runMoneyTransferTestJob: () -> (Result);
+  sendEmail: () -> (EmailResponse);
+  sendEventCompletionEmail: () -> (Result);
+  sendEventCompletionEmailHoursTest: (nat) -> (Result);
+  sendEventCompletionEmailTest: (text) -> (Result);
+  transferAmountFromSubAccountToUserForEvent: (text) -> (Result_2);
+  transferAmountFromUserToEventSubAccount: (TransferRequestPayload) ->
+   (Result_1);
+  transferAmountFromUserToEventSubAccountTest: (text,
+   TransferRequestPayload) -> (Result_1);
+  transform: (TransformArgs) -> (HttpResponsePayload) query;
+  updateCanistergeekInformation: (UpdateInformationRequest) -> ();
+  updateKonectaEvent: (text, EventRequestPayload) -> (text);
+  updateMultipleKonectaEvents: (text, vec EventRequestPayload) -> (Result);
+  updateOperation: (record {updateOpsInput: UpdateOpsInputType;}) ->
+   (UpdateOpsOutputType);
+  userActionTableMetadata: () -> (GetTableMetadataOutputType) query;
+  withdrawEventPartipication: (RemoveCalendarEvent) -> (Result);
+  withdrawEventPartipicationTest: (text, RemoveCalendarEvent) -> (Result);
+}

@@ -1,0 +1,67 @@
+.feedDetail {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  height: 100%;
+}
+
+.eventCover {
+  @apply flex w-full rounded-b-[8px] justify-between overflow-hidden relative h-[397px] max-md:h-[172px] mb-[52px] max-md:mb-[8px] border-t-[4px];
+}
+
+.educational {
+  border-top-color: var(--color-educational);
+}
+
+.professional {
+  border-top-color: var(--color-professional);
+}
+
+.entertainment {
+  border-top-color: var(--color-entertainment);
+}
+
+.health {
+  border-top-color: var(--color-health);
+}
+
+.other {
+  border-top-color: var(--color-other);
+}
+
+.feedDetail .header {
+  padding: 26px 0px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.feedDetail .container {
+  display: flex;
+  justify-content: space-between;
+}
+
+@media (max-width: 768px) {
+  .feedDetail .header {
+    padding: 0;
+    margin-bottom: 12px;
+  }
+  .feedDetail .container {
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+}
+
+.proposalCardStatusText {
+  text-transform: capitalize;
+  font-size: 0.8rem;
+}
+.proposalCardStatusText[data-status='Accepted'] {
+  color: var(--color-health);
+}
+.proposalCardStatusText[data-status='Declined'] {
+  color: var(--color-fail);
+}
+.proposalCardStatusText[data-status='Applied'] {
+  color: var(--color-accent);
+}

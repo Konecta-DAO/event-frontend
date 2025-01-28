@@ -1,0 +1,33 @@
+.star {
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+[data-size='sm'].star {
+  font-size: 0.5rem;
+}
+
+[data-size='md'].star {
+  font-size: 1.5rem;
+}
+
+[data-size='lg'].star {
+  font-size: 2rem;
+}
+
+.star:hover {
+  transition: all ease 100ms;
+  scale: 1.1;
+}
+
+[data-filled].star {
+  background: linear-gradient(192.8deg, #2e68ff 9.26%, #6691ff 85.23%);
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
