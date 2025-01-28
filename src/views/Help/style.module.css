@@ -1,0 +1,15 @@
+.help {
+  display: flex;
+  flex-direction: column;
+}
+
+.help .header {
+  padding-bottom: 25px;
+}
+
+@media (max-width: 768px) {
+  .help .header {
+    padding-bottom: 4px;
+    margin-top: -10px;
+  }
+}

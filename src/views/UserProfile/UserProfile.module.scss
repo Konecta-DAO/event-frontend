@@ -1,0 +1,76 @@
+.transactionTable {
+  table-layout: auto;
+  color: rgba(255, 255, 255, 0.7);
+  width: 100%;
+  text-align: left;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-block: 12px;
+
+  th {
+    font-weight: 500;
+    padding: 12px 8px;
+    color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+
+  td {
+    font-weight: 500;
+    padding: 4px 8px;
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  td[data-type='date-cell'] {
+    font-weight: 400;
+    font-size: 14px;
+    max-width: 10ch;
+    word-break: normal;
+    white-space: preserve-breaks;
+  }
+
+  td[data-type='to-cell'] {
+    max-width: 300px;
+  }
+
+  td[data-type='reference'] {
+    text-align: center;
+  }
+
+  td[data-type='event-cell'] {
+    p {
+      font-size: 16px;
+    }
+
+    span {
+      background-color: rgba(255, 255, 255, 0.05);
+      padding: 4px 8px;
+      border-radius: 8px;
+      margin-inline-end: 8px;
+      font-size: 12px;
+    }
+  }
+
+  tbody {
+    tr:nth-child(odd) {
+      background-color: rgba(255, 255, 255, 0.03);
+    }
+    tr:nth-child(even) {
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+    tr:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .transactionTable {
+    th,
+    td {
+      min-width: 120px;
+    }
+    td[data-type='event-cell'] {
+      min-width: 320px;
+    }
+  }
+}
