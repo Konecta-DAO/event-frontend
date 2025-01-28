@@ -1,0 +1,16 @@
+:root {
+  --color-fail: #ff5245;
+  --color-gray-200: #bcbcc2;
+  --color-gray-400: #a6a5ae;
+  --color-gray-600: #797985;
+  --color-gray-900: #363548;
+  --color-gray-950: #29283c;
+  --color-accent: #337ff5;
+  --color-educational: #34aadc;
+  --color-professional: #8849eb;
+  --color-entertainment: #db7a2d;
+  --color-health: #2ab272;
+  --color-other: #ff6392;
+  --color-default: #ffffff0a;
+  --green-variant-1: #32cd32;
+}

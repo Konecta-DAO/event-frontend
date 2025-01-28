@@ -1,0 +1,75 @@
+.eventsCard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background-color: #29283c;
+  border-top: 2px solid #34aadc;
+  border-radius: 0 0 8px 8px;
+  padding: 12px 8px;
+  color: white;
+  font-weight: 700;
+  font-size: 14px;
+  justify-content: space-between;
+  height: 100%;
+  border: 0.5px solid #454466;
+  overflow: hidden;
+}
+
+.multiDayEventCard {
+  padding: 8px 8px;
+  font-size: 12px;
+  font-weight: 600;
+  border-top-width: 2px;
+}
+
+.myEventCard {
+  background-color: #337ff5;
+}
+
+.eventsCard.educational {
+  border-top-color: var(--color-educational);
+}
+
+.eventsCard.professional {
+  border-top-color: var(--color-professional);
+}
+
+.eventsCard.entertainment {
+  border-top-color: var(--color-entertainment);
+}
+
+.eventsCard.health {
+  border-top-color: var(--color-health);
+}
+
+.eventsCard.other {
+  border-top-color: var(--color-other);
+}
+
+.eventsCard.accent {
+  border-top-color: var(--color-accent);
+}
+
+.eventsCard:hover {
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .eventsCard {
+    padding: 12px 4px;
+  }
+}
+
+.passedEventsCard {
+  background-image: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.04) 25%,
+    #ffffff00 25%,
+    #ffffff00 50%,
+    rgba(255, 255, 255, 0.04) 50%,
+    rgba(255, 255, 255, 0.04) 75%,
+    #ffffff00 75%,
+    #ffffff00 100%
+  );
+  background-size: 43.19px 41.7px;
+}

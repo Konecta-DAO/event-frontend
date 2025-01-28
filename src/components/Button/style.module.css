@@ -1,0 +1,32 @@
+.button {
+  display: flex;
+  justify-content: space-between;
+  color: white;
+  border-radius: 8px;
+  border: none;
+  text-align: center;
+  justify-content: center;
+  padding: 14px 20px;
+  font-size: 16px;
+  align-items: center;
+  gap: 8px;
+}
+
+.button.primary {
+  background-color: #ffffff0d;
+}
+
+.button.accent {
+  background-color: #337ff5;
+}
+
+.button.outlined {
+  color: #bcbcc2;
+  border: 1px solid var(--application-grey-40, #797985);
+  background: none;
+}
+
+.button.none {
+  background: none;
+  color: #ff5245;
+}
