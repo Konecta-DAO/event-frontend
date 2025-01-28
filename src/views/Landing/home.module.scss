@@ -1,0 +1,143 @@
+.page {
+  font-family: Inter;
+  text-align: center;
+  width: 100%;
+  margin-inline: auto;
+}
+
+.sectionOuterContainer {
+  width: 100%;
+  position: relative;
+}
+
+.sectionContainer {
+  width: 100%;
+  max-width: 1288px;
+  margin-inline: auto;
+}
+
+@media screen and (max-width: 768px) {
+  .sectionContainer {
+    padding: 0 24px 0 24px;
+  }
+}
+
+.blueText {
+  height: 19px;
+  font-family: Inter;
+  font-size: 12px;
+  font-weight: 500;
+  background: linear-gradient(180.15deg, #2d68ff, #6590ff);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-align: left;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.headingText {
+  font-family: Montserrat;
+  font-size: 58px;
+  font-weight: 600;
+  line-height: 70px;
+  letter-spacing: -0.87px;
+  background: linear-gradient(180deg, #ffffff, rgba(255, 255, 255, 0.67));
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  @media screen and (max-width: 768px) {
+    font-size: 36px;
+    letter-spacing: -0.015em;
+    line-height: 120%;
+    white-space: wrap;
+  }
+}
+
+.primaryCTA {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 12px 24px 12px 24px;
+  gap: 8px;
+  background: linear-gradient(180.15deg, #2d68ff, #6590ff);
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+
+  span {
+    font-family: Inter;
+    font-size: 14px;
+    font-weight: 500;
+    background: linear-gradient(180deg, #ffffff, rgba(255, 255, 255, 0.67));
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 20px;
+    letter-spacing: -0.14px;
+    white-space: nowrap;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .primaryCTA {
+    padding: 14px 20px 14px 20px;
+  }
+}
+
+.secondaryCTA {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 12px 24px 12px 24px;
+  gap: 8px;
+  background-color: rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+
+  span {
+    font-family: Inter;
+    font-size: 14px;
+    font-weight: 500;
+    background: linear-gradient(180deg, #ffffff, rgba(255, 255, 255, 0.67));
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 20px;
+    letter-spacing: -0.14px;
+    white-space: nowrap;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .secondaryCTA {
+    padding: 14px 20px 14px 20px;
+  }
+}
+
+.bodyText1 {
+  font-size: 18px;
+  font-weight: 400;
+  opacity: 0.8;
+  line-height: 28px;
+  color: rgba(255, 255, 255, 0.6);
+  text-align: center;
+}
+
+@media screen and (max-width: 768px) {
+  .bodyText1 {
+    font-size: 16px;
+    line-height: 26px;
+    font-weight: 400;
+    letter-spacing: unset;
+    text-align: center;
+  }
+}
+
+.bodyText2 {
+  font-size: 14px;
+  font-weight: 500;
+  opacity: 0.8;
+  line-height: 20px;
+  letter-spacing: -0.14px;
+  color: rgb(128, 123, 135);
+  text-align: center;
+}

@@ -1,0 +1,137 @@
+.weekdays {
+  border-radius: 8px 8px 0 0;
+  background-color: #ffffff0a;
+  width: 100%;
+}
+.weekdays td:first-child {
+  width: 9% !important;
+}
+
+.weekdays td {
+  width: 13%;
+  text-align: center;
+  padding: 12px 24px;
+}
+
+.weekdays td .date {
+  color: #fff;
+  text-align: center;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.weekdays td .weekday {
+  color: #fff;
+  text-align: center;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  opacity: 0.4;
+}
+
+.weekdays tr td.today {
+  background-color: #337ff52e;
+}
+
+.times {
+  background-color: #ffffff0a;
+  width: 100%;
+  border-radius: 0 0 0 8px;
+}
+
+.times tbody tr {
+  display: flex;
+  flex-direction: column;
+}
+
+.times tbody tr td {
+  text-align: center;
+  height: 90px;
+  position: relative;
+}
+
+.times tbody tr td p {
+  position: absolute;
+  color: #fff;
+  text-align: center;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  opacity: 0.6;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.dateCells {
+  border-radius: 0 0 8px 0;
+  background-color: rgba(255, 255, 255, 0.05);
+  width: 100%;
+  border-collapse: collapse;
+  position: relative;
+}
+
+.dateCells .weekRow {
+  display: flex;
+  width: 100%;
+}
+
+.dateCells .weekRow .dateCell:last-child {
+  border-right: none !important;
+}
+
+.dateCells .weekRow .dateCell:first-child {
+  border-left: none !important;
+}
+
+.dateCells .weekRow:first-child .dateCell {
+  border-top: none !important;
+}
+
+.dateCells .weekRow:last-child .dateCell {
+  border-bottom: none !important;
+}
+
+.dateCells .weekRow .dateCell {
+  width: 100%;
+  height: 90px;
+  border-right: 2px solid #ffffff1a;
+  border-top: 2px solid #ffffff1a;
+}
+
+.dateCells .weekRow .dateCell.today {
+  background-color: #337ff52e;
+}
+
+@media (max-width: 768px) {
+  .weekdays {
+    background-color: #201f34;
+  }
+  .weekdays td {
+    padding: 12px 0;
+  }
+  .weekdays td .date {
+    font-size: 12px;
+  }
+  .weekdays td .weekday {
+    font-size: 10px;
+  }
+
+  .times tbody tr td {
+    background-color: #29283c;
+  }
+  .times tbody tr td p {
+    font-size: 12px !important;
+    padding: 0;
+    z-index: 100;
+  }
+
+  .times tbody tr td {
+    height: 60px;
+  }
+  .dateCells .weekRow .dateCell {
+    height: 60px;
+  }
+}

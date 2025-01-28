@@ -1,0 +1,1 @@
+export const SET_LOADING = 'APP_STATE::SET_LOADING'

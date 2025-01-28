@@ -1,0 +1,117 @@
+$dim-bg: rgba(255, 255, 255, 0.04);
+
+$calendar-border: rgba(255, 255, 255, 0.1);
+$cell-border: rgba(255, 255, 255, 0.1);
+$today-highlight-bg: #2d62b12e;
+$current-time-color: #337ff5;
+$out-of-range-bg-color: $dim-bg;
+
+@import 'react-big-calendar/lib/sass/styles.scss';
+
+.rbc-time-view {
+  border-radius: 8px;
+}
+.rbc-event {
+  background-color: transparent;
+  border: 0px !important;
+}
+.rbc-event:focus {
+  outline: none !important;
+}
+.rbc-event.rbc-selected {
+  background-color: transparent;
+  z-index: 10;
+}
+
+.rbc-selected .rbc-event-content {
+  border-radius: 8px;
+  box-shadow: 2px 2px 20px #a8c9fb62;
+}
+
+.rbc-current-time-indicator {
+  height: 2px;
+}
+.rbc-time-header-cell-single-day {
+  display: flex;
+}
+
+.rbc-calendar {
+  color: rgba(255, 255, 255);
+}
+
+.rbc-time-content {
+  @apply scrollbar;
+}
+
+.rbc-time-slot .rbc-label {
+  opacity: 0.5;
+}
+
+.rbc-timeslot-group {
+  min-height: 88px;
+}
+
+.rbc-allday-cell {
+  // display: none;
+}
+
+.rbc-header > button > span {
+  white-space: pre;
+}
+
+.rbc-time-header-cell > .rbc-today {
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.rbc-events-container {
+  margin-right: 0px !important;
+}
+
+.rbc-time-gutter,
+.rbc-time-header-gutter {
+  background-color: $dim-bg;
+  min-width: 79.8px;
+  .rbc-timeslot-group {
+    border-width: 0px;
+    text-align: center;
+  }
+
+  @media screen and (max-width: 768px) {
+    min-width: 0px;
+    font-size: 10px;
+    padding-right: 2px;
+    padding-left: 2px;
+  }
+}
+
+.rbc-time-view {
+  .rbc-row {
+    min-height: unset;
+  }
+}
+
+.rbc-time-header-content {
+  background-color: $dim-bg;
+  min-height: 60px;
+  border-left-width: 0px;
+  .rbc-row {
+    flex: 1;
+  }
+  .rbc-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-width: 0px;
+    padding-block: 8px;
+  }
+}
+
+.rbc-day-slot {
+  border-bottom-width: 0px;
+  border-top-width: 0px;
+  .rbc-time-slot {
+    border-top-width: 0px;
+    border-bottom-width: 0px;
+  }
+}
