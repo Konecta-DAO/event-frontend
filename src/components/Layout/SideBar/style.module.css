@@ -1,0 +1,42 @@
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  width: 292px;
+  height: 100vh;
+  flex-shrink: 0;
+  border-right: 1.5px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.06);
+  z-index: 1000;
+  padding: 32px 24px;
+  justify-content: space-between;
+  overflow-y: auto;
+}
+
+.educational {
+  background-color: var(--color-educational);
+}
+
+.professional {
+  background-color: var(--color-professional);
+}
+
+.entertainment {
+  background-color: var(--color-entertainment);
+}
+
+.health {
+  background-color: var(--color-health);
+}
+
+.other {
+  background-color: var(--color-other);
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    background: none;
+    border: none;
+    padding: 26px !important;
+    width: 100%;
+  }
+}

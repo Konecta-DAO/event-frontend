@@ -1,0 +1,98 @@
+.applicant-status-card {
+  position: relative;
+  color: white;
+  background-color: rgb(255, 255, 255, 0.05);
+  padding: 12px 24px;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  border-left-width: 8px;
+  transition: background-color 100ms;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.applicant-status-card[data-active='true'] {
+  background-color: rgb(255, 255, 255, 0.1);
+}
+
+.lastUpdatedAt {
+  font-size: 14px;
+  color: rgba(256, 256, 256, 0.8);
+}
+.lastUpdatedAtTime {
+  display: inline;
+}
+
+.cardDetails {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 8px;
+}
+
+.eventName {
+  font-size: 20px;
+  font-weight: 600;
+}
+.eventCreator {
+  font-size: 16px;
+}
+.noApplicants {
+  font-size: 16px;
+  color: rgb(255, 255, 255, 0.5);
+}
+
+.viewEventButton {
+  position: absolute;
+  display: none;
+  bottom: 0px;
+  right: 0px;
+  padding: 11.5px 20px;
+  color: black;
+  background-color: rgb(255, 255, 255, 0.4);
+  border-top-left-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background-color 300ms;
+}
+.viewEventButton[data-active='true'] {
+  display: flex;
+}
+.viewEventButton:hover {
+  background-color: rgb(255, 255, 255, 0.8);
+}
+
+@media (max-width: 768px) {
+  .lastUpdatedAt {
+    font-size: 12px;
+  }
+  .lastUpdatedAtTime {
+    display: none;
+  }
+
+  .eventName {
+    font-size: 16px;
+  }
+  .eventCreator {
+    font-size: 12px;
+  }
+  .noApplicants {
+    font-size: 14px;
+    @apply line-clamp-2;
+  }
+  .noApplicants[data-active='true'] {
+    @apply line-clamp-none;
+  }
+
+  .viewEventButton {
+    position: relative;
+    border-radius: 8px;
+    justify-content: center;
+    width: 100%;
+    background-color: rgb(255, 255, 255, 0.1);
+    color: white;
+  }
+}

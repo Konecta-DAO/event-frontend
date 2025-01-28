@@ -1,0 +1,44 @@
+.calendar {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 50px);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 26px;
+}
+
+.header .actions {
+  display: flex;
+  gap: 12px;
+}
+
+.header .actions button,
+.header .actions a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: white;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px; /* 125% */
+  letter-spacing: -0.16px;
+  padding: 14px 17px;
+  border-radius: 8px;
+  text-align: center;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .header .actions button,
+  .header .actions a {
+    min-width: 26px;
+    min-height: 26px;
+    padding: 3px;
+    font-size: 12px;
+  }
+}

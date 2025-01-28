@@ -1,0 +1,66 @@
+.tags {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 10px;
+  width: fit-content;
+  color: white;
+
+  background-color: var(--color-default);
+  user-select: none;
+}
+
+.tags.xsmall {
+  font-size: 8px;
+  font-style: normal;
+  font-weight: 400;
+  padding: 2px 4px;
+  border-radius: 4px;
+}
+
+.tags.small {
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  padding: 4px 12px;
+  border-radius: 4px;
+}
+
+.tags.medium {
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  padding: 12px 20px;
+  border-radius: 6px;
+}
+
+.tags.educational {
+  background-color: var(--color-educational);
+}
+
+.tags.professional {
+  background-color: var(--color-professional);
+}
+
+.tags.entertainment {
+  background-color: var(--color-entertainment);
+}
+
+.tags.health {
+  background-color: var(--color-health);
+}
+
+.tags.other {
+  background-color: var(--color-other);
+}
+
+.tags.accent {
+  background-color: var(--color-accent);
+}
+
+.tags .close {
+  cursor: pointer;
+  width: 12px;
+  height: 12px;
+  color: #ffffff99;
+}
