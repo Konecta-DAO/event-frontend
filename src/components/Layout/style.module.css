@@ -1,0 +1,66 @@
+.layout {
+  display: flex;
+  height: 100vh;
+  flex: 1;
+  height: auto;
+  width: 100%;
+  background: #363548;
+}
+
+.layout .gradient2 {
+  position: fixed;
+  bottom: 0;
+  left: 233px;
+  width: 479px;
+  height: 467px;
+  flex-shrink: 0;
+  border-radius: 479px;
+  background: #651d71;
+  box-shadow: 0px 0px 80px 0px #c9b2c7;
+  filter: blur(290px);
+  z-index: 1000;
+}
+.layout .gradient1 {
+  position: fixed;
+  top: 0;
+  left: 600px;
+  width: 383px;
+  height: 375px;
+  flex-shrink: 0;
+  border-radius: 383px;
+  background: #3e43b5;
+  box-shadow: 0px 0px 80px 0px #c9b2c7;
+  filter: blur(275px);
+  z-index: 1000;
+}
+
+.layout .mainContent {
+  position: relative;
+  flex: 1;
+  z-index: 1000;
+  padding: 25px 32px;
+  height: 100vh;
+  overflow-y: auto;
+  @apply scrollbar;
+}
+
+.layout .mGradient1 {
+  position: fixed;
+  top: -300px;
+  left: 0;
+  border-radius: 737.344px;
+  background: #3e43b5;
+  box-shadow: 0px 0px 80px 0px #c9b2c7;
+  filter: blur(275px);
+  width: 383px;
+  height: 737.344px;
+  flex-shrink: 0;
+  z-index: 0;
+}
+
+@media (max-width: 768px) {
+  .layout {
+    background: none;
+    flex-direction: column;
+  }
+}

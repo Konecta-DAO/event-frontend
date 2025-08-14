@@ -1,0 +1,57 @@
+.feedCard {
+  min-width: 100px;
+  padding: 0;
+  border-top: 3.448px solid
+    var(--application-tag-colors-professional-purple, #8849eb);
+  cursor: pointer;
+  flex-basis: 300px;
+  flex-shrink: 1;
+  flex-grow: 1;
+  max-width: 436px;
+}
+
+.feedCard.educational {
+  border-top-color: var(--color-educational);
+}
+
+.feedCard.professional {
+  border-top-color: var(--color-professional);
+}
+
+.feedCard.entertainment {
+  border-top-color: var(--color-entertainment);
+}
+
+.feedCard.health {
+  border-top-color: var(--color-health);
+}
+
+.feedCard.other {
+  border-top-color: var(--color-other);
+}
+
+.border-educational {
+  border-color: var(--color-educational);
+}
+
+.border-professional {
+  border-color: var(--color-professional);
+}
+
+.border-entertainment {
+  border-color: var(--color-entertainment);
+}
+
+.border-health {
+  border-color: var(--color-health);
+}
+
+.border-other {
+  border-color: var(--color-other);
+}
+
+@media screen and (max-width: 768px) {
+  .feedCard {
+    min-width: 60vw;
+  }
+}

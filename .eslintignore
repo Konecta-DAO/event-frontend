@@ -1,0 +1,2 @@
+# .eslintignore
+src/candid/js/**/*.did.js

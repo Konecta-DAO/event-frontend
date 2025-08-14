@@ -1,0 +1,88 @@
+.myCheckbox {
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding-left: 30px;
+  cursor: pointer;
+  font-size: 17px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  color: white;
+}
+
+.myCheckbox input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkmark {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  height: 18px;
+  width: 18px;
+  border-radius: 4px;
+  background-color: #fff;
+  transform: translateY(-50%);
+}
+
+.myCheckbox:hover input~.checkmark {
+  opacity: 0.8;
+}
+
+.myCheckbox input:checked~.checkmark {
+  background-color: #337ff5;
+}
+
+.myCheckbox input:checked~.checkmark.educational {
+  background-color: var(--color-educational);
+}
+
+.myCheckbox input:checked~.checkmark.professional {
+  background-color: var(--color-professional);
+}
+
+.myCheckbox input:checked~.checkmark.entertainment {
+  background-color: var(--color-entertainment);
+}
+
+.myCheckbox input:checked~.checkmark.health {
+  background-color: var(--color-health);
+}
+
+.myCheckbox input:checked~.checkmark.other {
+  background-color: var(--color-other);
+}
+
+.checkmark:after {
+  content: '';
+  position: absolute;
+  display: none;
+}
+
+.myCheckbox input:checked~.checkmark:after {
+  display: block;
+}
+
+.myCheckbox .checkmark:after {
+  left: 6px;
+  top: 3px;
+  width: 6px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+@media (max-width: 768px) {
+  .myCheckbox {
+    font-size: 12px;
+  }
+}
