@@ -1,17 +1,15 @@
 import { MoreVert } from '@mui/icons-material'
 import { Box, Modal, useMediaQuery } from '@mui/material'
 import UserIcon from 'assets/img/user.png'
-import { TokenLedgerModel } from 'entity/token-ledger.model'
+import { TokenLedgerModel } from 'entity/token-ledger.model.ts'
 import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { setWalletArr } from 'reduxStore/auth/authAction'
-import { useAppSelector } from 'reduxStore/hooks'
-import { RootState } from 'reduxStore/store'
-import indexActorServiceInstance from 'services/indexService'
-
-import ledgerActorServiceInstance from 'services/ledgerService'
-import nfidServiceInstance from 'services/nfidServices'
-import userActorServiceInstance from 'services/userService'
+import { setWalletArr } from 'reduxStore/auth/authAction.tsx'
+import { useAppSelector } from 'reduxStore/hooks.tsx'
+import { RootState } from 'reduxStore/store.tsx'
+import ledgerActorServiceInstance from 'services/ledgerService.tsx'
+import nfidServiceInstance from 'services/nfidServices.tsx'
+import userActorServiceInstance from 'services/userService.tsx'
 
 interface Props {
   isOpen: boolean

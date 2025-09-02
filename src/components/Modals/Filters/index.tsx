@@ -1,14 +1,14 @@
 import { Close, KeyboardArrowUpOutlined } from '@mui/icons-material'
 import { Drawer, Modal, styled, useMediaQuery } from '@mui/material'
-import CheckBox from 'components/CheckBox'
+import CheckBox from 'components/CheckBox/index.tsx'
 import {
   resetFilterCategories,
   setAllFilterCategories,
   toggleCategory,
-} from 'reduxStore/event/eventAction'
-import { useAppDispatch, useAppSelector } from 'reduxStore/hooks'
-import { RootState } from 'reduxStore/store'
-import { categories } from 'utils/values'
+} from 'reduxStore/event/eventAction.tsx'
+import { useAppDispatch, useAppSelector } from 'reduxStore/hooks.tsx'
+import { RootState } from 'reduxStore/store.tsx'
+import { categories } from 'utils/values.tsx'
 
 interface FilterWrapperProps {
   isOpen: boolean

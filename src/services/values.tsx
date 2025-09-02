@@ -2,8 +2,8 @@ import CHATCoinICon from 'assets/img/chat-coin.png'
 import ckBTCCoinIcon from 'assets/img/ckBTC-coin.png'
 import SNS1CoinIcon from 'assets/img/sns1-coin.png'
 import ICPCoinIcon from 'assets/svg/icp-coin.svg'
-import { ConstantsList } from 'constants/constants'
-import { TokenLedgerModel } from 'entity/token-ledger.model'
+import { ConstantsList } from 'constants/constants.ts'
+import { TokenLedgerModel } from 'entity/token-ledger.model.ts'
 
 export const tokenLedgerArr: TokenLedgerModel[] = [
   {

@@ -19,9 +19,9 @@ import {
 } from '@mui/material'
 import FeedCoverImg from 'assets/img/feed-cover.png'
 import UserIcon from 'assets/img/user.png'
-import InviteMembers from 'components/Modals/InviteMembers'
-import ShareLinks from 'components/Modals/ShareLinks'
-import Tags from 'components/Tags'
+import InviteMembers from 'components/Modals/InviteMembers/index.tsx'
+import ShareLinks from 'components/Modals/ShareLinks/index.tsx'
+import Tags from 'components/Tags/index.tsx'
 import { ReactNode, useCallback, useEffect, useMemo, useState } from 'react'
 import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import {
@@ -29,37 +29,37 @@ import {
   CalendarIcon,
   ClockIcon,
   EditIcon,
-} from 'utils/svg-icons'
-import ApplyForEventRequest from 'components/Modals/ApplyForEventRequest/ApplyForEventRequest'
-import Spinner from 'components/Spinner'
+} from 'utils/svg-icons.tsx'
+import ApplyForEventRequest from 'components/Modals/ApplyForEventRequest/ApplyForEventRequest.tsx'
+import Spinner from 'components/Spinner/index.tsx'
 import moment from 'moment'
-import { useAppDispatch, useAppSelector } from 'reduxStore/hooks'
-import eventActorServiceInstance from 'services/eventService'
-import konectaActorServiceInstance from 'services/konectaService'
-import AppliedUsers from './AppliedUsers'
+import { useAppDispatch, useAppSelector } from 'reduxStore/hooks.tsx'
+import eventActorServiceInstance from 'services/eventService.tsx'
+import konectaActorServiceInstance from 'services/konectaService.tsx'
+import AppliedUsers from './AppliedUsers.tsx'
 import styles from './style.module.css'
-import { setUserEventDetail } from 'reduxStore/event/eventAction'
-import { setIsAppLoading } from 'reduxStore/appState/appStateAction'
-import { checkIsUrl, preprendProtocolToUrl } from 'utils/values'
-import Notification from 'components/Modals/Notifications'
-import Attendees from './Attendees'
-import LinkToUserProfile from 'components/LinkToUserProfile'
-import { setLoader } from 'reduxStore/auth/authAction'
-import { getMomentFromNanoSeconds } from 'utils/dateTimeUtils'
-import userActorServiceInstance from 'services/userService'
-import MultiEventFeedBack from 'components/Modals/MultiEventFeedBack'
-import Emitter, { EventParams } from 'services/emitter'
-import { getEventCoverImageUrl, getVideoEmbedUrl, isVideoUrl } from 'utils/common/common'
-import indexActorServiceInstance from 'services/indexService'
-import {
+import { setUserEventDetail } from 'reduxStore/event/eventAction.tsx'
+import { setIsAppLoading } from 'reduxStore/appState/appStateAction.tsx'
+import { checkIsUrl, preprendProtocolToUrl } from 'utils/values.tsx'
+import Notification from 'components/Modals/Notifications/index.tsx'
+import Attendees from './Attendees.tsx'
+import LinkToUserProfile from 'components/LinkToUserProfile/LinkToUserProfile.tsx'
+import { setLoader } from 'reduxStore/auth/authAction.tsx'
+import { getMomentFromNanoSeconds } from 'utils/dateTimeUtils.ts'
+import userActorServiceInstance from 'services/userService.tsx'
+import MultiEventFeedBack from 'components/Modals/MultiEventFeedBack/MultiEventFeedBack.tsx'
+import Emitter, { EventParams } from 'services/emitter.ts'
+import { getEventCoverImageUrl, getVideoEmbedUrl, isVideoUrl } from 'utils/common/common.ts'
+import indexActorServiceInstance from 'services/indexService.tsx'
+import type {
   EventWithUserDataPayload,
   UpdateMultipleEventsPayload,
-} from 'candid/ts/event.did'
-import {
+} from 'candid/ts/event.did.d.ts'
+import type {
   UserFeedbackRequestPayload,
-} from 'candid/ts/konecta.did'
+} from 'candid/ts/konecta.did.d.ts'
 import { Principal } from '@dfinity/principal'
-import { UserPayload } from 'candid/ts/user.did'
+import type { UserPayload } from 'candid/ts/user.did.d.ts'
 
 interface ActionConfig {
   label: string

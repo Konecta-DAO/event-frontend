@@ -1,5 +1,4 @@
-import { Controller, Control, FieldError } from 'react-hook-form'
-import { RegisterOptions } from 'react-hook-form/dist/types/validator'
+import { Controller, Control, FieldError, RegisterOptions } from 'react-hook-form'
 
 interface InputProps {
   name: string

@@ -1,9 +1,9 @@
 import { useState } from 'react'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { CloseOutlined, FilterAltOutlined } from '@mui/icons-material'
 import { Box, Modal, useMediaQuery } from '@mui/material'
-import CreateEvent from 'views/CreateEvent'
-import { CalendarIcon } from 'utils/svg-icons'
+import CreateEvent from 'views/CreateEvent/index.tsx'
+import { CalendarIcon } from 'utils/svg-icons.tsx'
 
 interface Props {
   isOpen: boolean

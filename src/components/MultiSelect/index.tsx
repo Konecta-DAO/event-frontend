@@ -1,8 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
-import { Control, FieldError, useController } from 'react-hook-form'
-import { RegisterOptions } from 'react-hook-form/dist/types/validator'
+import { Control, FieldError, useController, RegisterOptions } from 'react-hook-form'
 import { Close, KeyboardArrowDown } from '@mui/icons-material'
-import Tags from 'components/Tags'
+import Tags from 'components/Tags/index.tsx'
 
 interface InputProps {
   items: any[]

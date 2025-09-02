@@ -1,6 +1,6 @@
-import ledgerActorServiceInstance from './ledgerService'
-import konectaActorServiceInstance from './konectaService'
-import { TransferRequestPayload } from 'candid/ts/konecta.did'
+import ledgerActorServiceInstance from './ledgerService.tsx'
+import konectaActorServiceInstance from './konectaService.tsx'
+import type { TransferRequestPayload } from 'candid/ts/konecta.did.d.ts'
 
 export const getICPApproval = async (
   principalId: string,

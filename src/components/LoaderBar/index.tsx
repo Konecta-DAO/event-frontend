@@ -1,2 +1,2 @@
-import comp from './LoaderBar'
+import comp from './LoaderBar.tsx'
 export default comp

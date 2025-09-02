@@ -1,10 +1,10 @@
 import * as React from 'react'
-import Header from 'components/Header'
-import SignUp from 'components/Modals/SignUp'
+import Header from 'components/Header/index.tsx'
+import SignUp from 'components/Modals/SignUp/index.tsx'
 import { ConnectWallet } from '@nfid/identitykit/react'
-import { setLoader } from 'reduxStore/auth/authAction'
+import { setLoader } from 'reduxStore/auth/authAction.tsx'
 
-import EventCard from './EventCard'
+import EventCard from './EventCard.tsx'
 
 import user1 from 'assets/img/landing/user1.png'
 import user2 from 'assets/img/landing/user2.png'
@@ -45,14 +45,14 @@ import {
   ChevronRight,
   PlayArrow,
 } from '@mui/icons-material'
-import FAQItem from 'components/FAQItem'
-import indexActorServiceInstance from 'services/indexService'
+import FAQItem from 'components/FAQItem/index.tsx'
+import indexActorServiceInstance from 'services/indexService.tsx'
 import styles from './home.module.scss'
 
 import _ from 'lodash'
-import Welcome2 from 'components/Modals/Welcome2'
-import VerifyPayment from 'components/Modals/VerifyPayment'
-import LoginInfo from 'components/Modals/LoginInfo'
+import Welcome2 from 'components/Modals/Welcome2/index.tsx'
+import VerifyPayment from 'components/Modals/VerifyPayment/index.tsx'
+import LoginInfo from 'components/Modals/LoginInfo/index.tsx'
 import { useCallback } from 'react'
 
 function PrimaryCTA(

@@ -1,5 +1,4 @@
 import { Box, Modal, useMediaQuery } from '@mui/material'
-import { Close } from '@mui/icons-material'
 import InternetIcon from 'assets/svg/internet.svg'
 
 import UserIcon from 'assets/svg/usericon.svg'

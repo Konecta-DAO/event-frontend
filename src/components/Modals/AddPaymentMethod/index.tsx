@@ -5,7 +5,7 @@ import { useLocation, useNavigate } from 'react-router'
 import GoogleLoginIcon from 'assets/svg/googleLogin.svg'
 import InternetIcon from 'assets/svg/internet.svg'
 import MetamaskIcon from 'assets/svg/metamask.svg'
-import { CardIcon } from 'utils/svg-icons'
+import { CardIcon } from 'utils/svg-icons.tsx'
 
 interface Props {
   isOpen: boolean

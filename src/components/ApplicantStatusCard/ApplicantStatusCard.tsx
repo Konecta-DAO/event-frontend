@@ -1,15 +1,15 @@
 import { CloseOutlined } from '@mui/icons-material'
 import { Modal } from '@mui/material'
 import { Avatar, AvatarGroup } from '@mui/joy'
-import {
+import type {
   ApplicantDetailsPayload,
   ApplicationStatusOfMyCreatedEvents,
-} from 'candid/ts/konecta.did'
-import LinkToUserProfile from 'components/LinkToUserProfile/LinkToUserProfile'
+} from 'candid/ts/konecta.did.d.ts'
+import LinkToUserProfile from 'components/LinkToUserProfile/LinkToUserProfile.tsx'
 import _ from 'lodash'
 import { useState } from 'react'
-import userActorServiceInstance from 'services/userService'
-import { getMomentFromNanoSeconds } from 'utils/dateTimeUtils'
+import userActorServiceInstance from 'services/userService.tsx'
+import { getMomentFromNanoSeconds } from 'utils/dateTimeUtils.ts'
 import styles from './Styles.module.css'
 
 export type ApplicantsStatusCardProps = ApplicationStatusOfMyCreatedEvents & {

@@ -1,10 +1,10 @@
 import { AddOutlined, FilterAltOutlined } from '@mui/icons-material'
-import Filters from 'components/Modals/Filters'
+import Filters from 'components/Modals/Filters/index.tsx'
 import { Link, useLocation } from 'react-router-dom'
 
 import styles from './styles.module.css'
 import { useState } from 'react'
-import MobileActions from 'components/Modals/MobileActions'
+import MobileActions from 'components/Modals/MobileActions/index.tsx'
 
 interface FilterEventCreateButtonGroupProps {
   isMobile?: boolean

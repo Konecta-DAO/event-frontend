@@ -1,10 +1,10 @@
 import { Box, Modal } from '@mui/material'
 import { Link } from 'react-router-dom'
-import indexActorServiceInstance from 'services/indexService'
-import Notification from '../Notifications'
+import indexActorServiceInstance from 'services/indexService.tsx'
+import Notification from '../Notifications/index.tsx'
 import { useEffect, useState } from 'react'
 import QRCode from 'react-qr-code'
-import { useAppDispatch } from 'reduxStore/hooks'
+import { useAppDispatch } from 'reduxStore/hooks.tsx'
 
 interface Props {
   isOpen: boolean

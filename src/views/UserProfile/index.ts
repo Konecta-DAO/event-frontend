@@ -1,2 +1,2 @@
-import comp from './UserProfile'
+import comp from './UserProfile.tsx'
 export default comp

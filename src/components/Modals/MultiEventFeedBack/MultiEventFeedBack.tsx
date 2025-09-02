@@ -1,10 +1,9 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { Modal } from '@mui/material'
-import StarRatingInput from 'components/StarRatingInput'
+import StarRatingInput from 'components/StarRatingInput/StarRatingInput.tsx'
 import _ from 'lodash'
-import update from 'immutability-helper'
-import { EventWithUserDataPayload } from 'candid/ts/event.did'
-import { checkIsUrl } from 'utils/values'
+import type { EventWithUserDataPayload } from 'candid/ts/event.did.d.ts'
+import { checkIsUrl } from 'utils/values.tsx'
 
 type EventId = string
 
@@ -52,7 +51,7 @@ type EventFormProps = FormControlProps & {
 
 interface FormConfig {
   getShownFieldList: (formValue: EventFeedback | undefined) => FormFieldUid[]
-  fieldLabelMap: Record<Partial<FormFieldUid>, string | undefined>
+  fieldLabelMap: Partial<Record<FormFieldUid, string>>
   fieldValidatorMap: Record<FormFieldUid, (value: FormFieldValue) => boolean>
   requiredFieldsUids: FormFieldUid[]
   fieldErrorLabelMap: Record<FormFieldUid, string>
@@ -495,18 +494,16 @@ const MultiEventFeedBack = (props: MultiEventFeedBackModalProps) => {
   const handleFormFieldUpdate = useCallback(
     (fieldName: FormFieldUid, fieldValue: FormFieldValue) => {
       setFormErrorValue((prev) => {
-        return update(prev, { $unset: [currentEvent.event_id] })
+        const { [currentEvent.event_id]: _removed, ...rest } = prev
+        return rest
       })
       setFormValue((prev) => {
-        if (prev[currentEvent.event_id]) {
-          return update(prev, {
-            [currentEvent.event_id]: { $merge: { [fieldName]: fieldValue } },
-          })
+        const id = currentEvent.event_id
+        const prevEntry = prev[id] ?? {}
+        return {
+          ...prev,
+          [id]: { ...prevEntry, [fieldName]: fieldValue },
         }
-
-        return update(prev, {
-          $merge: { [currentEvent.event_id]: { [fieldName]: fieldValue } },
-        })
       })
     },
     [currentEvent],

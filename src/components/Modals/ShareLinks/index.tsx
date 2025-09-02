@@ -3,7 +3,7 @@ import { Box, Modal, useMediaQuery } from '@mui/material'
 import { FacebookShareButton, TwitterShareButton } from 'react-share'
 
 import { useState } from 'react'
-import { CopyIcon, FaceBookIcon, TwitterIcon } from 'utils/svg-icons'
+import { CopyIcon, FaceBookIcon, TwitterIcon } from 'utils/svg-icons.tsx'
 
 interface Props {
   isOpen: boolean

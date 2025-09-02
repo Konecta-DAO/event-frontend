@@ -1,9 +1,8 @@
 import { Info, KeyboardArrowDown } from '@mui/icons-material'
 import { Tooltip } from '@mui/material'
 import { useEffect, useRef, useState } from 'react'
-import { Control, FieldError, useController } from 'react-hook-form'
-import { RegisterOptions } from 'react-hook-form/dist/types/validator'
-import { participationTooltip, participationTypes } from 'utils/values'
+import { Control, FieldError, useController, RegisterOptions } from 'react-hook-form'
+import { participationTooltip, participationTypes } from 'utils/values.tsx'
 
 interface InputProps {
   items: any[]

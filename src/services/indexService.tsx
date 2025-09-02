@@ -2,10 +2,10 @@ import { Actor, HttpAgent, Identity } from '@dfinity/agent';
 import { DelegationIdentity } from '@dfinity/identity';
 import { Principal } from '@dfinity/principal';
 import { idlFactory as IndexFactory } from '../candid/js/index.did.js';
-import userActorServiceInstance from './userService';
-import eventActorServiceInstance from './eventService';
-import konectaActorServiceInstance from './konectaService';
-import { tokenLedgerArr } from './values';
+import userActorServiceInstance from './userService.tsx';
+import eventActorServiceInstance from './eventService.tsx';
+import konectaActorServiceInstance from './konectaService.tsx';
+import { tokenLedgerArr } from './values.tsx';
 
 import type {
     _SERVICE as IndexActor,

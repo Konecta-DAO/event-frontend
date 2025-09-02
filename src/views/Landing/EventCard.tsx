@@ -1,4 +1,4 @@
-import Tags from 'components/Tags'
+import Tags from 'components/Tags/index.tsx'
 
 interface EventCardProps {
   img: string

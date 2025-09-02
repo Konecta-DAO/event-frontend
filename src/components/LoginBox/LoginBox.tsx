@@ -15,59 +15,6 @@ interface LoginBoxProps {
   onLoginSuccess: () => void
 }
 
-// const handleNFIDLoginAction = ({
-//   onSignUpRequired,
-//   onLoginSuccess,
-//   onError = () => {},
-//   agent,
-//   identity,
-// }: {
-//   onSignUpRequired: () => void
-//   onLoginSuccess: () => void
-//   onError: (err?: unknown) => void
-//   agent: HttpAgent
-//   identity: Identity
-// }): AppThunk<void> => {
-//   return async (dispatch) => {
-//     try {
-//       dispatch(setLoader(true))
-//       const attemptResponse = await indexActorServiceInstance.attemptNFIDLogin(
-//         agent,
-//         identity,
-//       )
-
-//       if (attemptResponse === undefined) {
-//         onError()
-//         dispatch(setLoader(false))
-//         return
-//       }
-
-//       const { type, success } = attemptResponse
-
-//       if (type === 'signup_required') {
-//         // if (true) {
-//         dispatch(setLoader(false))
-//         onSignUpRequired()
-//       } else if (type === 'login') {
-//         if (success) {
-//           const allPromise = []
-//           allPromise.push(indexActorServiceInstance.eventActorInit())
-//           allPromise.push(indexActorServiceInstance.konectaActorInit())
-//           await Promise.all(allPromise)
-//           onLoginSuccess()
-//         }
-//         dispatch(setLoader(false))
-//       }
-//     } catch (error) {
-//       console.log('handleNFIDLoginAction', error)
-//       onError(error)
-//       dispatch(setLoader(false))
-//     } finally {
-//       dispatch(setLoader(false))
-//     }
-//   }
-// }
-
 const LoginBox = (props: LoginBoxProps) => {
   const {
     style,

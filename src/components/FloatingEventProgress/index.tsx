@@ -4,8 +4,8 @@ import React from 'react'
 import {
   EventRequestState,
   updateEventRequestProgress,
-} from 'reduxStore/event/eventAction'
-import { useAppDispatch, useAppSelector } from 'reduxStore/hooks'
+} from 'reduxStore/event/eventAction.tsx'
+import { useAppDispatch, useAppSelector } from 'reduxStore/hooks.tsx'
 
 const FloatingEventProgress = () => {
   const [open, setOpen] = React.useState(false)

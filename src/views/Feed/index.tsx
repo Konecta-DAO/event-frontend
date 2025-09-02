@@ -8,8 +8,8 @@ import {
   Tabs,
   useMediaQuery,
 } from '@mui/material'
-import FeedCard from 'components/FeedCard'
-import Filters from 'components/Modals/Filters'
+import FeedCard from 'components/FeedCard/index.tsx'
+import Filters from 'components/Modals/Filters/index.tsx'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
@@ -18,28 +18,28 @@ import {
   FeedTabsConfig,
   FeedTabsSubCategories,
   FeedTabsType,
-} from 'utils/values'
+} from 'utils/values.tsx'
 
-import {
+import type {
   FeedResponsePayload,
   PaginatedScanCursor,
-} from 'candid/ts/konecta.did'
-import FilterEventCreateButtonGroup from 'components/FilterCreateEventButtonGroup'
-import Spinner from 'components/Spinner'
+} from 'candid/ts/konecta.did.d.ts'
+import FilterEventCreateButtonGroup from 'components/FilterCreateEventButtonGroup/index.tsx'
+import Spinner from 'components/Spinner/index.tsx'
 import _ from 'lodash'
 import {
   setFeedSearchText,
   setFeedSelectedTab,
   triggerFeedSearch,
-} from 'reduxStore/event/eventAction'
-import { useAppDispatch, useAppSelector } from 'reduxStore/hooks'
-import { RootState } from 'reduxStore/store'
+} from 'reduxStore/event/eventAction.tsx'
+import { useAppDispatch, useAppSelector } from 'reduxStore/hooks.tsx'
+import { RootState } from 'reduxStore/store.tsx'
 import konectaActorServiceInstance, {
   FEED_TYPE,
-} from 'services/konectaService'
+} from 'services/konectaService.tsx'
 import styles from './style.module.css'
-import ledgerActorServiceInstance from 'services/ledgerService'
-import { setWalletArr } from 'reduxStore/auth/authAction'
+import ledgerActorServiceInstance from 'services/ledgerService.tsx'
+import { setWalletArr } from 'reduxStore/auth/authAction.tsx'
 import { Principal } from '@dfinity/principal'
 
 interface TabPanelProps {

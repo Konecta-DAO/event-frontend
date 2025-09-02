@@ -1,6 +1,5 @@
 import { CloseOutlined } from '@mui/icons-material'
 import { Box, Modal } from '@mui/material'
-import { Link } from 'react-router-dom'
 
 interface Props {
   isOpen: boolean

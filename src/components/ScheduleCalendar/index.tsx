@@ -1,6 +1,6 @@
 import styles from './index.module.css'
-import EventsCard from 'components/EventsCard'
-import { times, weekdays } from 'utils/values'
+import EventsCard from 'components/EventsCard/index.tsx'
+import { times, weekdays } from 'utils/values.tsx'
 import eventData from 'data/events.json'
 
 interface Props {

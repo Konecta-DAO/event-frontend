@@ -1,7 +1,7 @@
 import { Box, Modal } from '@mui/material'
 import { useNavigate } from 'react-router'
 
-import SignUpForm from 'components/SignUpForm/SignUpForm'
+import SignUpForm from 'components/SignUpForm/SignUpForm.tsx'
 import { Close } from '@mui/icons-material'
 import { useState } from 'react'
 

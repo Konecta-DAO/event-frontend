@@ -1,15 +1,15 @@
-import LoginBox from 'components/LoginBox/LoginBox'
+import LoginBox from 'components/LoginBox/LoginBox.tsx'
 import React, { useEffect, useState } from 'react'
 import styles from './styles.module.css'
 import LandingIcon from 'assets/svg/logo-landing.svg'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { Modal } from '@mui/material'
-import SignUpForm from 'components/SignUpForm'
+import SignUpForm from 'components/SignUpForm/SignUpForm.tsx'
 import { useIdentityKit } from '@nfid/identitykit/react'
-import LoginInfo from 'components/Modals/LoginInfo'
-import { useAppDispatch, useAppSelector } from 'reduxStore/hooks'
-import { setSignUpRequired } from 'reduxStore/auth/authAction'
-import indexActorServiceInstance from 'services/indexService'
+import LoginInfo from 'components/Modals/LoginInfo/index.tsx'
+import { useAppDispatch, useAppSelector } from 'reduxStore/hooks.tsx'
+import { setSignUpRequired } from 'reduxStore/auth/authAction.tsx'
+import indexActorServiceInstance from 'services/indexService.tsx'
 
 const signUpFormStyle = {
   position: 'absolute' as 'absolute',

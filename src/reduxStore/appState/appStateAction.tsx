@@ -1,4 +1,4 @@
-import { SET_LOADING } from './appStateActionTypes'
+import { SET_LOADING } from './appStateActionTypes.tsx'
 
 export const setIsAppLoading = (value: boolean) => {
   return {

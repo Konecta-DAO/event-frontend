@@ -1,5 +1,5 @@
-import { UserPayload } from 'candid/ts/user.did'
-import { UPDATE_USER_PROFILE } from './userActionTypes'
+import type { UserPayload } from 'candid/ts/user.did.d.ts'
+import { UPDATE_USER_PROFILE } from './userActionTypes.tsx'
 
 export const saveUserProfile = (userProfile: UserPayload) => {
   return {

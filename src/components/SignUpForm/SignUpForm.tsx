@@ -1,18 +1,18 @@
 import { AddOutlined } from '@mui/icons-material'
 import { Avatar, Box, SxProps, Theme, useMediaQuery } from '@mui/material'
-import { HttpAgent } from '@dfinity/agent'
-import { useIdentityKit } from '@nfid/identitykit/react'
-import Input from 'components/Input'
-import SearchableSingleSelect from 'components/SearchableSingleSelect'
-import TextArea from 'components/TextArea'
+import { Agent, HttpAgent } from '@dfinity/agent'
+import { useAgent } from '@nfid/identitykit/react'
+import Input from 'components/Input/index.tsx'
+import SearchableSingleSelect from 'components/SearchableSingleSelect/index.tsx'
+import TextArea from 'components/TextArea/index.tsx'
 import React, { useState } from 'react'
 import { FieldError, useForm } from 'react-hook-form'
-import { setLoader } from 'reduxStore/auth/authAction'
-import { useAppDispatch } from 'reduxStore/hooks'
-import { saveUserProfile } from 'reduxStore/user/userAction'
-import indexActorServiceInstance from 'services/indexService'
-import userActorServiceInstance from 'services/userService'
-import { countries, timezones } from 'utils/values'
+import { setLoader } from 'reduxStore/auth/authAction.tsx'
+import { useAppDispatch } from 'reduxStore/hooks.tsx'
+import { saveUserProfile } from 'reduxStore/user/userAction.tsx'
+import indexActorServiceInstance from 'services/indexService.tsx'
+import userActorServiceInstance from 'services/userService.tsx'
+import { countries, timezones } from 'utils/values.tsx'
 
 interface Props {
   handleClose: () => void
@@ -90,7 +90,7 @@ const handleProfileCompletionAction = ({
   data: SignUpInputs
   profileImageFile: File | null
   onSignUpSuccess: () => void
-  agent: HttpAgent
+  agent: Agent
 }) => {
   return async (dispatch: any) => {
     try {
@@ -141,7 +141,7 @@ const SignUpForm = ({
 }: Props) => {
   const isonTabletOrMobile = useMediaQuery('(max-width: 768px)')
   const dispatch = useAppDispatch()
-  const { agent } = useIdentityKit()
+  const agent = useAgent()
   const [selectedImageFile, setSelectedImageFile] = useState<File | null>(null)
   const [profileImageError, setProfileImageError] = useState<string>('')
 

@@ -2,7 +2,7 @@ import { Control, FieldError, useController } from 'react-hook-form'
 import {
   getMomentFromNanoSeconds,
   getNanosecondsFromMoment,
-} from 'utils/dateTimeUtils'
+} from 'utils/dateTimeUtils.ts'
 
 interface Props {
   name: string

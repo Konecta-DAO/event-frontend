@@ -4,13 +4,13 @@ import {
   ClipShapeLeft,
   ClipShapeRight,
   ClockIcon,
-} from 'utils/svg-icons'
-import Tags from 'components/Tags'
+} from 'utils/svg-icons.tsx'
+import Tags from 'components/Tags/index.tsx'
 import UserIcon from 'assets/img/user.png'
-import { getMomentFromNanoSeconds } from 'utils/dateTimeUtils'
-import { FeedResponsePayload } from 'candid/ts/konecta.did'
-import userActorServiceInstance from 'services/userService'
-import { getEventCoverImageUrl } from 'utils/common/common'
+import { getMomentFromNanoSeconds } from 'utils/dateTimeUtils.ts'
+import type { FeedResponsePayload } from 'candid/ts/konecta.did.d.ts'
+import userActorServiceInstance from 'services/userService.tsx'
+import { getEventCoverImageUrl } from 'utils/common/common.ts'
 
 interface FeedCardProps {
   event: FeedResponsePayload

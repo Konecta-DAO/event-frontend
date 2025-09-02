@@ -1,2 +1,2 @@
-import Comp from './MultiEventFeedBack'
+import Comp from './MultiEventFeedBack.tsx'
 export default Comp

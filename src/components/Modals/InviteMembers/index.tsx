@@ -1,7 +1,7 @@
 import { Search, Close } from '@mui/icons-material'
 import { Input, InputAdornment, useMediaQuery, Box, Modal } from '@mui/material'
-import CheckBox from 'components/CheckBox'
-import Button from 'components/Button'
+import CheckBox from 'components/CheckBox/index.tsx'
+import Button from 'components/Button/index.tsx'
 import UserIcon from 'assets/img/user.png'
 interface Props {
   isOpen: boolean

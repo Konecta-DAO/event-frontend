@@ -5,20 +5,20 @@ import { Calendar, momentLocalizer, Event as CalendarEvent } from 'react-big-cal
 import moment from 'moment';
 import _ from 'lodash';
 
-import { BackArrowIcon } from 'utils/svg-icons';
-import EventsCard from 'components/EventsCard';
-import FilterEventCreateButtonGroup from 'components/FilterCreateEventButtonGroup';
-import { getMomentFromNanoSeconds } from 'utils/dateTimeUtils';
+import { BackArrowIcon } from 'utils/svg-icons.tsx';
+import EventsCard from 'components/EventsCard/index.tsx';
+import FilterEventCreateButtonGroup from 'components/FilterCreateEventButtonGroup/index.tsx';
+import { getMomentFromNanoSeconds } from 'utils/dateTimeUtils.ts';
 
-import { useAppDispatch, useAppSelector } from 'reduxStore/hooks';
-import { RootState } from 'reduxStore/store';
-import { setUserEvents } from 'reduxStore/event/eventAction';
+import { useAppDispatch, useAppSelector } from 'reduxStore/hooks.tsx';
+import { RootState } from 'reduxStore/store.tsx';
+import { setUserEvents } from 'reduxStore/event/eventAction.tsx';
 import { useIdentityKit } from '@nfid/identitykit/react';
 
-import eventActorServiceInstance from 'services/eventService';
+import eventActorServiceInstance from 'services/eventService.tsx';
 
-import { EventMetadataResponsePayload } from 'candid/ts/user.did';
-import { EventWithUserDataPayload } from 'candid/ts/event.did';
+import type { EventMetadataResponsePayload } from 'candid/ts/user.did.d.ts';
+import type { EventWithUserDataPayload } from 'candid/ts/event.did.d.ts';
 
 import './calendarStyle.scss';
 import styles from './style.module.css';

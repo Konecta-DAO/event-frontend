@@ -1,8 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit'
-import { authReducer } from './auth/authReducer'
-import { userReducer } from './user/userReducer'
-import { eventReducer } from './event/eventReducer'
-import { appStateReducer } from './appState/appStateReducer'
+import { authReducer } from './auth/authReducer.tsx'
+import { userReducer } from './user/userReducer.tsx'
+import { eventReducer } from './event/eventReducer.tsx'
+import { appStateReducer } from './appState/appStateReducer.tsx'
 
 const appReducer = {
   appState: appStateReducer,

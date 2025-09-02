@@ -1,18 +1,18 @@
 import { useRef } from 'react'
 import { Avatar, AvatarGroup } from '@mui/joy'
 import { styled, useMediaQuery } from '@mui/material'
-import Tags from 'components/Tags'
+import Tags from 'components/Tags/index.tsx'
 import UserIcon1 from 'assets/svg/user1.svg'
 import UserIcon2 from 'assets/svg/user2.svg'
 import UserIcon3 from 'assets/svg/user3.svg'
 
 import styles from './style.module.css'
 import moment from 'moment'
-import { useAppSelector } from 'reduxStore/hooks'
-import { EditIcon } from 'utils/svg-icons'
+import { useAppSelector } from 'reduxStore/hooks.tsx'
+import { EditIcon } from 'utils/svg-icons.tsx'
 import { useNavigate } from 'react-router'
-import { getMomentFromNanoSeconds } from 'utils/dateTimeUtils'
-import { EventMetadataResponsePayload } from 'candid/ts/user.did'
+import { getMomentFromNanoSeconds } from 'utils/dateTimeUtils.ts'
+import type { EventMetadataResponsePayload } from 'candid/ts/user.did.d.ts'
 
 interface EventsCardProps {
   data: (EventMetadataResponsePayload & { start: Date; end: Date }) | any

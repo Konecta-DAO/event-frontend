@@ -5,16 +5,16 @@ import _ from 'lodash'
 
 import { CloseOutlined } from '@mui/icons-material'
 
-import LinkToUserProfile from 'components/LinkToUserProfile'
-import eventActorServiceInstance from 'services/eventService'
-import userActorServiceInstance from 'services/userService'
-import {
+import LinkToUserProfile from 'components/LinkToUserProfile/LinkToUserProfile.tsx'
+import eventActorServiceInstance from 'services/eventService.tsx'
+import userActorServiceInstance from 'services/userService.tsx'
+import type {
   EventWithUserDataPayload,
   UserResponsePayload,
-} from 'candid/ts/event.did'
-import Emitter, { EventParams } from 'services/emitter'
-import { setEventAttendees } from 'reduxStore/event/eventAction'
-import { useAppDispatch } from 'reduxStore/hooks'
+} from 'candid/ts/event.did.d.ts'
+import Emitter, { EventParams } from 'services/emitter.ts'
+import { setEventAttendees } from 'reduxStore/event/eventAction.tsx'
+import { useAppDispatch } from 'reduxStore/hooks.tsx'
 
 interface AttendeesProp {
   event: EventWithUserDataPayload

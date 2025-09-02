@@ -9,10 +9,9 @@ import {
   SET_SIGNUP_REQUIRED,
   SET_USER_CANISTER_ID,
   SET_WALLET,
-} from './authActionTypes'
+} from './authActionTypes.tsx'
 import { NFID } from '@nfid/embed'
-import update from 'immutability-helper'
-import { TokenLedgerModel } from 'entity/token-ledger.model'
+import { TokenLedgerModel } from 'entity/token-ledger.model.ts'
 
 interface AuthState {
   pid: string
@@ -21,7 +20,7 @@ interface AuthState {
   identity?: Identity
   userCanisterId: string
   loader: boolean
-  walletArr: TokenLedgerModel[] | []
+  walletArr: TokenLedgerModel[]   // `T[] | []` -> just `T[]`
   isSignUpRequired: boolean
 }
 
@@ -36,48 +35,50 @@ const initialState: AuthState = {
   isSignUpRequired: false,
 }
 
-export const authReducer = (state = initialState, action: AnyAction) => {
+export const authReducer = (
+  state: AuthState = initialState,
+  action: AnyAction
+): AuthState => {
   const { type, payload } = action
 
   switch (type) {
     case SET_PRINCIPAL_ID: {
-      const { pid } = payload
-      return update(state, { pid: { $set: pid } })
+      const { pid } = payload as { pid: string }
+      return { ...state, pid }
     }
 
     case SET_ADDRESS: {
-      const { address } = payload
-      return update(state, { address: { $set: address } })
+      const { address } = payload as { address: string }
+      return { ...state, address }
     }
 
     case SET_WALLET: {
-      const { walletArr } = payload
-      return update(state, { walletArr: { $set: walletArr } })
+      const { walletArr } = payload as { walletArr: TokenLedgerModel[] }
+      return { ...state, walletArr }
     }
 
     case SET_IDENTITY: {
-      const { identity } = payload
-      return update(state, { identity: { $set: identity } })
+      const { identity } = payload as { identity?: Identity }
+      return { ...state, identity }
     }
 
     case SET_USER_CANISTER_ID: {
-      const { cid } = payload
-      return update(state, { userCanisterId: { $set: cid } })
+      const { cid } = payload as { cid: string }
+      return { ...state, userCanisterId: cid }
     }
 
     case SET_SIGNUP_REQUIRED: {
-      const { required } = payload
-      return update(state, { isSignUpRequired: { $set: required } })
+      const { required } = payload as { required: boolean }
+      return { ...state, isSignUpRequired: required }
     }
 
     case SET_LOADER: {
-      const { loader } = payload
-      return update(state, { loader: { $set: loader } })
+      const { loader } = payload as { loader: boolean }
+      return { ...state, loader }
     }
 
-    case RESET_STATE: {
+    case RESET_STATE:
       return initialState
-    }
 
     default:
       return state

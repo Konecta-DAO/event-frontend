@@ -4,15 +4,14 @@ import { idlFactory as ICPLedgerFactory } from '../candid/js/ledger.did.js'
 import { _SERVICE as ICPLedgerActor } from '../candid/ts/ledger.did.js'
 import { idlFactory as ckBTCLedgerFactory } from '../candid/js/ckbtc-ledger.did.js'
 import { _SERVICE as ckBTCLedgerActor } from '../candid/ts/ckbtc-ledger.did.js'
-import indexActorServiceInstance from './indexService'
+import indexActorServiceInstance from './indexService.tsx'
 import moment from 'moment'
 import { ApproveArgs } from 'entity/payment/ApproveArgs.js'
-import konectaActorServiceInstance from './konectaService'
+import konectaActorServiceInstance from './konectaService.tsx'
 
 import { TokenLedgerModel } from 'entity/token-ledger.model.js'
-import { toFixed } from 'utils/common/common'
-import nfidServiceInstance from './nfidServices'
-import { tokenLedgerArr } from './values'
+import { toFixed } from 'utils/common/common.ts'
+import { tokenLedgerArr } from './values.tsx'
 
 class LedgerActorService {
   ledgerActor: ICPLedgerActor | undefined

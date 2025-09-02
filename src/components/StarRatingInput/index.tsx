@@ -1,2 +1,2 @@
-import Comp from './StarRatingInput'
+import Comp from './StarRatingInput.tsx'
 export default Comp

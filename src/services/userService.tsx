@@ -1,5 +1,6 @@
 import {
   Actor,
+  Agent,
   HttpAgent,
   HttpAgentOptions,
   Identity,
@@ -22,7 +23,7 @@ class UserActorService {
 
   /* ────────────────────────────────────────────────────────── Init helpers ── */
   /** Init when an `HttpAgent` is already available (e.g. from auth‑flow). */
-  async initWithAgent(canisterId: string, agent: HttpAgent): Promise<boolean> {
+  async initWithAgent(canisterId: string, agent: Agent): Promise<boolean> {
     try {
       if (process.env.NODE_ENV === "development") {
         await agent.fetchRootKey();

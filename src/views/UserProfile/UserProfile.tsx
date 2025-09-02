@@ -2,38 +2,38 @@ import { AddOutlined, EditOutlined, OpenInNew } from '@mui/icons-material'
 import { Badge, Tab, Tabs } from '@mui/material'
 import PlaceHolderCoverImage from 'assets/img/profile-cover.png'
 import UserIcon from 'assets/img/user.png'
-import { UserPayload } from 'candid/ts/index.did'
-import FeedCard from 'components/FeedCard'
+import type { UserPayload } from 'candid/ts/index.did.d.ts'
+import FeedCard from 'components/FeedCard/index.tsx'
 import ProposalStatusCard, {
   Proposal,
-} from 'components/ProposalStatusCard/ProposalStatusCard'
-import Spinner from 'components/Spinner'
-import Tags from 'components/Tags'
+} from 'components/ProposalStatusCard/ProposalStatusCard.tsx'
+import Spinner from 'components/Spinner/index.tsx'
+import Tags from 'components/Tags/index.tsx'
 
 import _ from 'lodash'
 import { useCallback, useEffect, useState } from 'react'
 import { Link, Navigate, useNavigate, useParams } from 'react-router-dom'
-import { useAppDispatch, useAppSelector } from 'reduxStore/hooks'
-import { RootState } from 'reduxStore/store'
-import indexActorServiceInstance from 'services/indexService'
-import konectaActorServiceInstance from 'services/konectaService'
-import userActorServiceInstance from 'services/userService'
-import { getMomentFromNanoSeconds } from 'utils/dateTimeUtils'
+import { useAppDispatch, useAppSelector } from 'reduxStore/hooks.tsx'
+import { RootState } from 'reduxStore/store.tsx'
+import indexActorServiceInstance from 'services/indexService.tsx'
+import konectaActorServiceInstance from 'services/konectaService.tsx'
+import userActorServiceInstance from 'services/userService.tsx'
+import { getMomentFromNanoSeconds } from 'utils/dateTimeUtils.ts'
 
-import {
+import type {
   ApplicationStatusOfMyCreatedEvents,
   FeedResponsePayload,
   PaginatedApplicationStatusOfMyCreatedEvents,
   PaginatedFeedResponsePayload,
   TransactionWithUserDataResponse,
-} from 'candid/ts/konecta.did'
+} from 'candid/ts/konecta.did.d.ts'
 import styles from './UserProfile.module.scss'
-import { checkIsUrl, preprendProtocolToUrl } from 'utils/values'
-import { setUserProfileSelectedTab } from 'reduxStore/event/eventAction'
-import { getVideoEmbedUrl, isVideoUrl } from 'utils/common/common'
-import ApplicantStatusCard from 'components/ApplicantStatusCard/ApplicantStatusCard'
-import eventActorServiceInstance from 'services/eventService'
-import { PaginatedProposalsResponse, ProposalResponsePayload } from 'candid/ts/event.did'
+import { checkIsUrl, preprendProtocolToUrl } from 'utils/values.tsx'
+import { setUserProfileSelectedTab } from 'reduxStore/event/eventAction.tsx'
+import { getVideoEmbedUrl, isVideoUrl } from 'utils/common/common.ts'
+import ApplicantStatusCard from 'components/ApplicantStatusCard/ApplicantStatusCard.tsx'
+import eventActorServiceInstance from 'services/eventService.tsx'
+import type  { PaginatedProposalsResponse, ProposalResponsePayload } from 'candid/ts/event.did.d.ts'
 
 interface HeaderProps {
   showEditButton?: boolean

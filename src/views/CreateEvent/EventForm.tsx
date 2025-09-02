@@ -1,12 +1,12 @@
 import { Link, useParams, useNavigate } from 'react-router-dom'
 import { useEffect, useMemo, useRef, useState } from 'react'
-import Input from 'components/Input'
-import TextArea from 'components/TextArea'
-import ImageUploader from 'components/ImageUploader'
-import MultiSelect from 'components/MultiSelect'
-import DateSelPicker from 'components/DateSelPicker'
-import TimeInput from 'components/TimeInput'
-import SingleSelect from 'components/SingleSelect'
+import Input from 'components/Input/index.tsx'
+import TextArea from 'components/TextArea/index.tsx'
+import ImageUploader from 'components/ImageUploader/index.tsx'
+import MultiSelect from 'components/MultiSelect/index.tsx'
+import DateSelPicker from 'components/DateSelPicker/index.tsx'
+import TimeInput from 'components/TimeInput/index.tsx'
+import SingleSelect from 'components/SingleSelect/index.tsx'
 import {
   languages,
   eventTypes,
@@ -16,29 +16,29 @@ import {
   priceCourses,
   eventLocationLinkRegexp,
   participationTypes,
-} from 'utils/values'
+} from 'utils/values.tsx'
 import styles from './style.module.css'
 import { Tooltip } from '@mui/material'
 import { useForm } from 'react-hook-form'
 import InfoIcon from '@mui/icons-material/Info'
 import moment from 'moment'
-import indexActorServiceInstance from 'services/indexService'
-import eventActorServiceInstance from 'services/eventService'
+import indexActorServiceInstance from 'services/indexService.tsx'
+import eventActorServiceInstance from 'services/eventService.tsx'
 import { Principal } from '@dfinity/principal'
-import Notification from 'components/Modals/Notifications'
-import { setLoader } from 'reduxStore/auth/authAction'
-import { useAppDispatch, useAppSelector } from 'reduxStore/hooks'
+import Notification from 'components/Modals/Notifications/index.tsx'
+import { setLoader } from 'reduxStore/auth/authAction.tsx'
+import { useAppDispatch, useAppSelector } from 'reduxStore/hooks.tsx'
 import {
   setUserEventDetail,
-} from 'reduxStore/event/eventAction'
+} from 'reduxStore/event/eventAction.tsx'
 import {
   getMomentFromNanoSeconds,
   getNanosecondsFromMoment,
-} from 'utils/dateTimeUtils'
-import { EventRequestPayload, EventWithUserDataPayload } from 'candid/ts/event.did'
-import { FeedResponsePayload } from 'candid/ts/konecta.did'
-import { CreateEventInputs } from 'entity/EventRequestModel'
-import { getEventCoverImageUrl } from 'utils/common/common'
+} from 'utils/dateTimeUtils.ts'
+import type { EventRequestPayload, EventWithUserDataPayload } from 'candid/ts/event.did.d.ts'
+import type { FeedResponsePayload } from 'candid/ts/konecta.did.d.ts'
+import { CreateEventInputs } from 'entity/EventRequestModel.ts'
+import { getEventCoverImageUrl } from 'utils/common/common.ts'
 
 const EventForm = ({ }: { handleClose?: () => void }) => {
   const dispatch = useAppDispatch()

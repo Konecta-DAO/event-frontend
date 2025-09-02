@@ -1,2 +1,2 @@
-import comp from './ApplyForEventRequest'
+import comp from './ApplyForEventRequest.tsx'
 export default comp

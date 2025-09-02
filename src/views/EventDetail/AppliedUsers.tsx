@@ -8,16 +8,16 @@ import styles from './style.module.css'
 
 import { CloseOutlined } from '@mui/icons-material'
 
-import LinkToUserProfile from 'components/LinkToUserProfile'
-import Notification from 'components/Modals/Notifications'
-import Spinner from 'components/Spinner'
+import LinkToUserProfile from 'components/LinkToUserProfile/LinkToUserProfile.tsx'
+import Notification from 'components/Modals/Notifications/index.tsx'
+import Spinner from 'components/Spinner/index.tsx'
 import { useNavigate } from 'react-router'
-import konectaActorServiceInstance from 'services/konectaService'
-import userActorServiceInstance from 'services/userService'
-import Emitter, { EventParams } from 'services/emitter'
-import { EventWithUserDataPayload, UserResponsePayload } from 'candid/ts/event.did'
-import { ApplicantDetailsPayload } from 'candid/ts/konecta.did'
-import eventActorServiceInstance from 'services/eventService'
+import konectaActorServiceInstance from 'services/konectaService.tsx'
+import userActorServiceInstance from 'services/userService.tsx'
+import Emitter, { EventParams } from 'services/emitter.ts'
+import type { EventWithUserDataPayload, UserResponsePayload } from 'candid/ts/event.did.d.ts'
+import type { ApplicantDetailsPayload } from 'candid/ts/konecta.did.d.ts'
+import eventActorServiceInstance from 'services/eventService.tsx'
 
 interface AppliedUsersProp {
   event: EventWithUserDataPayload
@@ -358,14 +358,12 @@ const AppliedUsers = ({ event }: AppliedUsersProp) => {
 
       if ('ok' in resp) {
         // Optimistically update the UI
-        setProposals((prev) =>
-          update(prev, {
-            $set: prev.map((p) =>
-              p.userData.principal_id === proposal.userData.principal_id
-                ? { ...p, status: 'Declined' }
-                : p,
-            ),
-          }),
+        setProposals(prev =>
+          prev.map(p =>
+            p.userData.principal_id === proposal.userData.principal_id
+              ? { ...p, status: 'Declined' }
+              : p
+          )
         )
         handleCloseModal()
         setShowSuccessNotification('DECLINED')

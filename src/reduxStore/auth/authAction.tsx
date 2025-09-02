@@ -8,8 +8,8 @@ import {
   SET_ADDRESS,
   SET_WALLET,
   SET_SIGNUP_REQUIRED,
-} from './authActionTypes'
-import { TokenLedgerModel } from 'entity/token-ledger.model'
+} from './authActionTypes.tsx'
+import { TokenLedgerModel } from 'entity/token-ledger.model.ts'
 
 export const setPrincipalId = (pid: string) => {
   return {

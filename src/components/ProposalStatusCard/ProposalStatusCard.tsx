@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import styles from './Styles.module.css'
-import { getMomentFromNanoSeconds } from 'utils/dateTimeUtils'
+import { getMomentFromNanoSeconds } from 'utils/dateTimeUtils.ts'
 
 type ProposalStatus = 'Applied' | 'Accepted' | 'Declined'
 

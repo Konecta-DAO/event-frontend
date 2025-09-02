@@ -21,20 +21,20 @@ import {
   SET_EVENT_REQUEST_SUCCESS,
   RESET_EVENT_REQUEST,
   TRIGGER_FEED_SEARCH,
-} from './eventActionTypes'
+} from './eventActionTypes.tsx'
 import {
   EventCategory,
   FeedTabsSubCategories,
   FeedTabsType,
-} from 'utils/values'
+} from 'utils/values.ts'
 
 import { EventMetadataResponsePayload } from 'candid/ts/user.did.js'
 import {
   FeedResponsePayload,
   UserResponsePayload,
 } from 'candid/ts/konecta.did.js'
-import { UserProfileTabTypes } from 'views/UserProfile/UserProfile'
-import { EventWithUserDataPayload } from 'candid/ts/event.did'
+import { UserProfileTabTypes } from 'views/UserProfile/UserProfile.tsx'
+import type { EventWithUserDataPayload } from 'candid/ts/event.did.d.ts'
 
 type PID = string
 

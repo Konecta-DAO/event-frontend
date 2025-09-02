@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import FAQItem from 'components/FAQItem'
-import { faqs } from 'utils/values'
+import FAQItem from 'components/FAQItem/index.tsx'
+import { faqs } from 'utils/values.tsx'
 import styles from './style.module.css'
 
 export default function Help() {

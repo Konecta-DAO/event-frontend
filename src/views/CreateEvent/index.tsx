@@ -1,5 +1,5 @@
 import { Drawer, styled, useMediaQuery } from '@mui/material'
-import EventForm from './EventForm'
+import EventForm from './EventForm.tsx'
 
 const MobileCreateEvents = styled(Drawer)<{ component?: React.ElementType }>({
   '& .MuiDrawer-paper': {

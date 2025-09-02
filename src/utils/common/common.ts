@@ -1,4 +1,4 @@
-import indexActorServiceInstance from 'services/indexService'
+import indexActorServiceInstance from 'services/indexService.tsx'
 import FeedCoverImg from 'assets/img/feed-cover.png'
 
 export const toFixed = (num: string, fixed: number) => {
