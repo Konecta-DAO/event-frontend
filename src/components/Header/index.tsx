@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import {
   Box,
   Divider,
@@ -8,18 +8,26 @@ import {
   ListItemText,
   styled,
   useMediaQuery,
-} from '@mui/material'
-import { MenuOutlined } from '@mui/icons-material'
-import LandingIcon from 'assets/svg/logo-landing.svg'
-import styles from './index.module.css'
+} from '@mui/material';
+import { MenuOutlined } from '@mui/icons-material';
+import LandingIcon from 'assets/svg/logo-landing.svg';
+import styles from './index.module.css';
+import { ConnectWallet } from '@nfid/identitykit/react';
 
-interface Props {
-  handleLogin: any
-  handleSignUp: any
-}
-export default function Header({ handleLogin }: Props) {
-  const isonTabletOrMobile = useMediaQuery('(max-width: 768px)')
-  const [isMobileMenu, setIsMobileMenu] = useState(false)
+export default function Header() {
+  const isonTabletOrMobile = useMediaQuery('(max-width: 768px)');
+  const [isMobileMenu, setIsMobileMenu] = useState(false);
+  const connectWalletRef = React.useRef<HTMLDivElement>(null);
+
+  const handleConnect = () => {
+    if (connectWalletRef.current) {
+      const button = connectWalletRef.current.querySelector('button');
+      if (button) {
+        button.click();
+      }
+    }
+  };
+
   const toggleDrawer =
     (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
       if (
@@ -27,11 +35,10 @@ export default function Header({ handleLogin }: Props) {
         ((event as React.KeyboardEvent).key === 'Tab' ||
           (event as React.KeyboardEvent).key === 'Shift')
       ) {
-        return
+        return;
       }
-
-      setIsMobileMenu(open)
-    }
+      setIsMobileMenu(open);
+    };
 
   const MobileSideBarMenu = styled(Drawer)<{ component?: React.ElementType }>({
     '& .MuiDrawer-paper': {
@@ -39,17 +46,18 @@ export default function Header({ handleLogin }: Props) {
       color: '#fff',
       padding: '50px 0px',
     },
-  })
+  });
+
   const MenuItem = styled(ListItemButton)<{ component?: React.ElementType }>({
     '&': {
       padding: '8px 24px',
     },
-  })
+  });
 
   return (
     <div className={styles.root}>
       <div className="absolute h-[1px] bottom-0 w-full white-gradient"></div>
-
+      <div ref={connectWalletRef} style={{ display: 'none' }}><ConnectWallet /></div>
       {isonTabletOrMobile ? (
         <div className="flex w-full px-[24px] justify-between">
           <img src={LandingIcon} alt="logo" />
@@ -71,30 +79,15 @@ export default function Header({ handleLogin }: Props) {
               onKeyDown={toggleDrawer(false)}
             >
               <List component="nav" aria-label="main mailbox folders">
-                <MenuItem>
-                  <ListItemText primary="About us" />
-                </MenuItem>
-                <MenuItem>
-                  <ListItemText primary="Features" />
-                </MenuItem>
-                <MenuItem>
-                  <ListItemText primary="How it works" />
-                </MenuItem>
-                <MenuItem>
-                  <ListItemText primary="Reviews" />
-                </MenuItem>
-                <MenuItem>
-                  <ListItemText primary="FAQ" />
-                </MenuItem>
+                <MenuItem><ListItemText primary="About us" /></MenuItem>
+                <MenuItem><ListItemText primary="Features" /></MenuItem>
+                <MenuItem><ListItemText primary="How it works" /></MenuItem>
+                <MenuItem><ListItemText primary="Reviews" /></MenuItem>
+                <MenuItem><ListItemText primary="FAQ" /></MenuItem>
               </List>
               <Divider color="#383838" />
               <List component="nav" aria-label="main mailbox folders">
-                <MenuItem onClick={handleLogin}>
-                  <ListItemText primary="Log in" />
-                </MenuItem>
-                {/* <MenuItem onClick={handleSignUp}>
-                  <ListItemText primary="Sign up" />
-                </MenuItem> */}
+                <MenuItem onClick={handleConnect}><ListItemText primary="Log in" /></MenuItem>
               </List>
             </Box>
           </MobileSideBarMenu>
@@ -103,35 +96,19 @@ export default function Header({ handleLogin }: Props) {
         <>
           <img src={LandingIcon} alt="logo" className="mr-[220px]" />
           <div className={styles.menu}>
-            <a className={styles.menuitem} href="#aboutus">
-              About us
-            </a>
-            <a className={styles.menuitem} href="#features">
-              Features
-            </a>
-            <a className={styles.menuitem} href="#howitworks">
-              How it works
-            </a>
-            <a className={styles.menuitem} href="#reviews">
-              Reviews
-            </a>
-            <a className={styles.menuitem} href="#faq">
-              FAQ
-            </a>
+            <a className={styles.menuitem} href="#aboutus">About us</a>
+            <a className={styles.menuitem} href="#features">Features</a>
+            <a className={styles.menuitem} href="#howitworks">How it works</a>
+            <a className={styles.menuitem} href="#reviews">Reviews</a>
+            <a className={styles.menuitem} href="#faq">FAQ</a>
           </div>
           <div className="flex gap-[12px] text-white text-[14px]">
-            <button className="bg-none p-[12px_36px]" onClick={handleLogin}>
+            <button className="bg-none p-[12px_36px]" onClick={handleConnect}>
               Log in
             </button>
-            {/* <button
-              className="bg-[#110A21] border border-[#2e68ff] rounded-[8px] p-[12px_36px]"
-              onClick={handleSignUp}
-            >
-              Sign up
-            </button> */}
           </div>
         </>
       )}
     </div>
-  )
+  );
 }

@@ -67,10 +67,6 @@ const LoginPage: React.FC<{
       </Link>
       <LoginBox
         showCloseButton={false}
-        onLoginSuccess={() => { }}
-        onSignUpRequired={() => {
-          dispatch(setSignUpRequired(true))
-        }}
       />
       <Modal open={isSignUpRequired} onClose={handleCloseSignUp}>
         <SignUpForm

@@ -228,11 +228,7 @@ export const idlFactory = ({ IDL }) => {
         [IDL.Record({ 'trusted_origins' : IDL.Vec(IDL.Text) })],
         ['query'],
       ),
-    'isUserRegistered' : IDL.Func(
-        [IDL.Principal],
-        [RegistrationCheckResult],
-        ['composite_query'],
-      ),
+    'isUserRegistered' : IDL.Func([], [RegistrationCheckResult], []),
     'reinstallUserCanisters' : IDL.Func([], [IDL.Text], []),
     'signUp' : IDL.Func([IDL.Text], [Result], []),
     'updateCanistergeekInformation' : IDL.Func(

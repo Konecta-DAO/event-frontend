@@ -1,62 +1,55 @@
-import { MoreVert } from '@mui/icons-material'
-import { Avatar, Skeleton, Typography, useMediaQuery } from '@mui/material'
-import React, { useEffect, useState } from 'react'
-import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom'
-import UserIcon from 'assets/img/user.png'
-import LogoIcon from 'assets/svg/logo-landing.svg'
-import WalletList from 'components/WalletList/indext.tsx'
-import { BackArrowIcon } from 'utils/svg-icons.tsx'
-import { menuItems } from 'utils/values.tsx'
-
-import styles from './style.module.css'
-import { useAppSelector } from 'reduxStore/hooks.tsx'
-import userActorServiceInstance from 'services/userService.tsx'
-import indexActorServiceInstance from 'services/indexService.tsx'
-import { tokenLedgerArr } from 'services/values.tsx'
-import { useIdentityKit } from '@nfid/identitykit/react'
+import { MoreVert } from '@mui/icons-material';
+import { Avatar, Skeleton, Typography, useMediaQuery } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import UserIcon from 'assets/img/user.png';
+import LogoIcon from 'assets/svg/logo-landing.svg';
+import WalletList from 'components/WalletList/indext.tsx';
+import { BackArrowIcon } from 'utils/svg-icons.tsx';
+import { menuItems } from 'utils/values.tsx';
+import styles from './style.module.css';
+import { useAppSelector } from 'reduxStore/hooks.tsx';
+import userActorServiceInstance from 'services/userService.tsx';
+import { tokenLedgerArr } from 'services/values.tsx';
+import { useAuth } from '@nfid/identitykit/react';
 
 const SideBar = ({ handleSidebarClose }: any) => {
-  const location = useLocation()
-  const navigate = useNavigate()
-  const [walletShow, setWalletShow] = useState(false)
-  const [selectedCoin, setSelectedCoin] = useState<any>(null)
-  const isonTabletOrMobile = useMediaQuery('(max-width: 768px)')
-  const [isLoading, setIsLoading] = useState(true)
-  const userProfile = useAppSelector((state) => state.user.userProfile)
-  const address = useAppSelector((state) => state.auth.address)
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [walletShow, setWalletShow] = useState(false);
+  const [selectedCoin, setSelectedCoin] = useState<any>(null);
+  const isonTabletOrMobile = useMediaQuery('(max-width: 768px)');
+  const [isLoading, setIsLoading] = useState(true);
+  const userProfile = useAppSelector((state) => state.user.userProfile);
+  const address = useAppSelector((state) => state.auth.address);
 
-  const { identity, user, disconnect } = useIdentityKit()
+  const {
+    user: nfidUser,
+  } = useAuth();
 
-  const isAuthenticated =
-    identity && user?.principal && user.principal.toText() !== '2vxsx-fae'
+  const isAuthenticated = !!nfidUser;
 
-  console.log(
-    'isAuthenticated111 - address - SideBar',
-    isAuthenticated,
-    address,
-  )
+  const { disconnect } = useAuth();
 
   const handleWalletClose = () => {
-    setWalletShow(false)
-  }
+    setWalletShow(false);
+  };
 
   const handleLogoutClick = async () => {
-    await disconnect()
-    navigate('landing', { replace: true })
-    console.log('logout111 called')
-  }
+    await disconnect();
+    navigate('/landing', { replace: true });
+  };
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setIsLoading(false)
-    }, 1)
-
-    return () => clearTimeout(timer)
-  }, [])
+      setIsLoading(false);
+    }, 1);
+    return () => clearTimeout(timer);
+  }, []);
 
   const toggleWalletShow = () => {
-    setWalletShow(!walletShow)
-  }
+    setWalletShow(!walletShow);
+  };
 
   return (
     <div className={styles.sidebar}>
@@ -108,25 +101,16 @@ const SideBar = ({ handleSidebarClose }: any) => {
             )}
             <div className="flex flex-col flex-1 justify-center items-start h-full text-left break-all">
               {isLoading ? (
-                <Skeleton width="100%">
-                  <Typography>.</Typography>
-                </Skeleton>
+                <Skeleton width="100%"><Typography>.</Typography></Skeleton>
               ) : (
                 <p className="line-clamp-1 text-[16px] text-white max-md:text-[13px]">
-                  {userProfile
-                    ? `${userProfile.firstname} ${userProfile.lastname}`
-                    : ''}
+                  {userProfile ? `${userProfile.firstname} ${userProfile.lastname}` : ''}
                 </p>
               )}
               {isLoading ? (
-                <Skeleton width="100%">
-                  <Typography>.</Typography>
-                </Skeleton>
+                <Skeleton width="100%"><Typography>.</Typography></Skeleton>
               ) : (
                 <p className="line-clamp-1 text-[#A9A9B1] text-[14px] max-md:text-[11px]">
-                  {/* {selectedCoin
-                    ? selectedCoin.addr
-                    : '7ab21f534behdjf4e7ab21f534behdjf'} */}
                   {address}
                 </p>
               )}
@@ -146,15 +130,12 @@ const SideBar = ({ handleSidebarClose }: any) => {
             const destinationRoute =
               typeof item.router === 'function'
                 ? item.router(userProfile?.username ?? '')
-                : item.router
+                : item.router;
 
-            const isActiveRoute = location.pathname.startsWith(destinationRoute)
+            const isActiveRoute = location.pathname.startsWith(destinationRoute);
             return (
               <Link
-                className={`${isActiveRoute
-                  ? 'btn-primary font-[500] text-[18px]'
-                  : 'btn-ghost'
-                  } justify-start`}
+                className={`${isActiveRoute ? 'btn-primary font-[500] text-[18px]' : 'btn-ghost'} justify-start`}
                 onClick={handleSidebarClose}
                 to={destinationRoute}
                 key={indx}
@@ -166,7 +147,7 @@ const SideBar = ({ handleSidebarClose }: any) => {
                 })}
                 {item.title}
               </Link>
-            )
+            );
           })}
         </div>
         {isAuthenticated && (
@@ -175,34 +156,6 @@ const SideBar = ({ handleSidebarClose }: any) => {
           </button>
         )}
       </div>
-      {/* <div>
-        <div className="bg-[#FFFFFF1A] mx-[-24px] mb-[24px] h-[1.5px]"></div>
-        <ul className="flex flex-col gap-[22px] w-full">
-          {categories
-            .sort((a, b) => b.value - a.value)
-            .map((category, index) => (
-              <li
-                className="flex justify-between items-center w-full text-[#BCBCC2] cursor-pointer"
-                key={index}
-              >
-                <div className="flex items-center gap-[12px]">
-                  <div
-                    className={`${
-                      styles[category.caption.toLowerCase()]
-                    } w-[8px] h-[8px] rounded-[100%]`}
-                  ></div>
-                  <p className="text-[16px] max-md:text-[13px]">
-                    {category.caption}
-                  </p>
-                </div>
-                <p className="flex bg-[#363548] p-[2px_6px] rounded-[5px] text-[14px] text-center max-md:text-[13px]">
-                  {category.value}
-                </p>
-              </li>
-            ))}
-        </ul>
-      </div> */}
-
       <WalletList
         isOpen={walletShow}
         coins={tokenLedgerArr}
@@ -211,7 +164,7 @@ const SideBar = ({ handleSidebarClose }: any) => {
         handleClose={handleWalletClose}
       />
     </div>
-  )
-}
+  );
+};
 
-export default SideBar
+export default SideBar;

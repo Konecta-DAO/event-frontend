@@ -192,7 +192,7 @@ export interface _SERVICE {
     [],
     { 'trusted_origins' : Array<string> }
   >,
-  'isUserRegistered' : ActorMethod<[Principal], RegistrationCheckResult>,
+  'isUserRegistered' : ActorMethod<[], RegistrationCheckResult>,
   'reinstallUserCanisters' : ActorMethod<[], string>,
   'signUp' : ActorMethod<[string], Result>,
   'updateCanistergeekInformation' : ActorMethod<

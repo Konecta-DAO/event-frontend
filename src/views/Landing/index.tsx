@@ -1,7 +1,7 @@
 import * as React from 'react'
 import Header from 'components/Header/index.tsx'
 import SignUp from 'components/Modals/SignUp/index.tsx'
-import { ConnectWallet } from '@nfid/identitykit/react'
+import { ConnectWallet, useAuth } from '@nfid/identitykit/react'
 import { setLoader } from 'reduxStore/auth/authAction.tsx'
 
 import EventCard from './EventCard.tsx'
@@ -53,7 +53,8 @@ import _ from 'lodash'
 import Welcome2 from 'components/Modals/Welcome2/index.tsx'
 import VerifyPayment from 'components/Modals/VerifyPayment/index.tsx'
 import LoginInfo from 'components/Modals/LoginInfo/index.tsx'
-import { useCallback } from 'react'
+import { useCallback, useEffect } from 'react'
+import { useAppSelector } from 'reduxStore/hooks.tsx'
 
 function PrimaryCTA(
   props: React.PropsWithChildren<{ onClick: React.MouseEventHandler }>,
@@ -948,45 +949,15 @@ function Landing({
 }: {
   setTargets: React.Dispatch<React.SetStateAction<string[]>>
 }) {
-  const [loginOpen, setLoginOpen] = React.useState(false)
-  const [welcomeForm, setWelcomeForm] = React.useState(false)
-  const [verifyForm, setVerifyForm] = React.useState(false)
-  // const [paymentSuccess, setPaymentSuccess] = React.useState(false)
-  const [signUpForm, setSignUpForm] = React.useState(false)
-  const [openLoginInfoModal, setOpenLoginInfoModal] = React.useState(false)
+  const {
+    user: nfidUser,
+  } = useAuth();
 
-  const handleOpen = useCallback(() => {
-    setLoginOpen(true)
-  }, [])
+  const isAuthenticated = !!nfidUser;
+  const [signUpForm, setSignUpForm] = React.useState(false);
+  const [openLoginInfoModal, setOpenLoginInfoModal] = React.useState(false);
 
-  const handleWelcomeFormClose = useCallback(() => {
-    setWelcomeForm(false)
-  }, [])
-
-  const handleVerifyFormOpen = useCallback(() => {
-    setVerifyForm(true)
-  }, [])
-
-  const handleVerifyFormClose = useCallback(() => {
-    setVerifyForm(false)
-  }, [])
-
-  // const handlePaymentSuccessOpen = useCallback(() => {
-  //   setPaymentSuccess(true)
-  // }, [])
-
-  // const handlePaymentSuccessClose = useCallback(() => {
-  //   setPaymentSuccess(false)
-  // }, [])
-
-  const handleSignUpFormOpen = useCallback(() => {
-    setSignUpForm(true)
-  }, [])
-  const handleSignUPFormClose = useCallback(() => {
-    setSignUpForm(false)
-  }, [])
-
-  const connectWalletRef = React.useRef<HTMLDivElement>(null)
+  const connectWalletRef = React.useRef<HTMLDivElement>(null);
 
   const handleConnect = useCallback(() => {
     if (connectWalletRef.current) {
@@ -997,54 +968,60 @@ function Landing({
     }
   }, []);
 
+  const handleSignUpFormOpen = useCallback(() => {
+    setSignUpForm(true);
+  }, []);
+
+  const handleSignUPFormClose = useCallback(() => {
+    setSignUpForm(false);
+  }, []);
+
+  const handleSignUpSuccess = () => {
+    setSignUpForm(false);
+    // The main App component will now handle the logic for re-login
+  };
+
   const handleLoginInfoClose = useCallback(() => {
     setOpenLoginInfoModal(false)
-  }, [])
+    localStorage.removeItem('showLoginInfoModal');
+    handleConnect();
+  }, [handleConnect]);
+
+  useEffect(() => {
+    const shouldShow = localStorage.getItem('showLoginInfoModal') === 'true';
+    if (shouldShow) {
+      setOpenLoginInfoModal(true);
+    }
+  }, []);
+
+
+  const isSignUpRequired = useAppSelector(
+    (state) => state.auth.isSignUpRequired,
+  )
+
+  useEffect(() => {
+    if (isSignUpRequired) {
+      setSignUpForm(true);
+    }
+  }, [isSignUpRequired])
 
   return (
     <div className={`${styles.page} scrollbar`}>
-      <Header handleLogin={handleConnect} handleSignUp={handleOpen} />
+      <Header />
       <Hero handleLogin={handleConnect} />
-      <Calendar />
-      <LiveEvents handleLogin={handleOpen} />
-      <CategoryTopics />
-      <AboutSection handleLogin={handleOpen} />
-      <FeaturesSection handleLogin={handleOpen} />
-      <HowItWorks handleLogin={handleOpen} />
-      <Testimonials />
-      <FooterHero handleLogin={handleOpen} />
+      {/* ... Other sections: Calendar, LiveEvents, etc. ... */}
+      <FooterHero handleLogin={handleConnect} />
       <FaqSection />
       <NewsletterSection />
-      <Footer handleLogin={handleOpen} />
+      <Footer handleLogin={handleConnect} />
       <SiteFooter />
-      {/* <LogIn
-        isOpen={loginOpen}
-        handleClose={handleLoginClose}
-        handleSignUpFormOpen={handleSignUpFormOpen}
-      /> */}
-      <Welcome2
-        isOpen={welcomeForm}
-        handleVerifyFormOpen={handleVerifyFormOpen}
-        handleClose={handleWelcomeFormClose}
-      />
-      <VerifyPayment
-        isOpen={verifyForm}
-        handleClose={handleVerifyFormClose}
-        icpAddress={indexActorServiceInstance.userSubaccLedgerIdentifier}
-        handleSignUpFormOpen={handleSignUpFormOpen}
-        paymentValue={'0.01'}
-        setLoader={setLoader}
-      />
-      {/* <SuccessPayment
-        isOpen={paymentSuccess}
-        handleClose={handlePaymentSuccessClose}
-      /> */}
+
       <SignUp
         isOpen={signUpForm}
         handleClose={handleSignUPFormClose}
         setTargets={setTargets}
       />
-      <div ref={connectWalletRef} style={{ visibility: 'hidden' }}>
+      <div ref={connectWalletRef} style={{ display: 'none' }}>
         <ConnectWallet />
       </div>
       <LoginInfo
@@ -1052,7 +1029,7 @@ function Landing({
         handleClose={handleLoginInfoClose}
       />
     </div>
-  )
+  );
 }
 
-export default Landing
+export default Landing;

@@ -230,8 +230,7 @@ service : {
    (vec CanisterMapPayload) query;
   get_trusted_origins: () -> (vec text);
   icrc28_trusted_origins: () -> (record {trusted_origins: vec text;}) query;
-  isUserRegistered: (userPrincipal: principal) ->
-   (RegistrationCheckResult) composite_query;
+  isUserRegistered: () -> (RegistrationCheckResult);
   reinstallUserCanisters: () -> (text);
   signUp: (username: text) -> (Result);
   updateCanistergeekInformation: (request: UpdateInformationRequest) -> ();

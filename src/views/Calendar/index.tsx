@@ -13,7 +13,7 @@ import { getMomentFromNanoSeconds } from 'utils/dateTimeUtils.ts';
 import { useAppDispatch, useAppSelector } from 'reduxStore/hooks.tsx';
 import { RootState } from 'reduxStore/store.tsx';
 import { setUserEvents } from 'reduxStore/event/eventAction.tsx';
-import { useIdentityKit } from '@nfid/identitykit/react';
+import { useAuth, useIdentityKit } from '@nfid/identitykit/react';
 
 import eventActorServiceInstance from 'services/eventService.tsx';
 
@@ -73,9 +73,12 @@ const MyCalendar = () => {
   const userEventsFromStore: Array<EventMetadataResponsePayload> = useAppSelector(userEventsSelector);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { identity, user } = useIdentityKit();
   const principalId = useAppSelector((state) => state.auth.pid);
-  const isAuthenticated = identity && user?.principal && user.principal.toText() !== '2vxsx-fae';
+  const {
+    user: nfidUser,
+  } = useAuth();
+
+  const isAuthenticated = !!nfidUser;
   const calendarRef = useRef(null);
 
   const scrollTime = useRef(new Date()).current;

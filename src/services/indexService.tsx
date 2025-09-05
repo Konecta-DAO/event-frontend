@@ -1,4 +1,4 @@
-import { Actor, HttpAgent, Identity } from '@dfinity/agent';
+import { Actor, Agent, HttpAgent, Identity } from '@dfinity/agent';
 import { DelegationIdentity } from '@dfinity/identity';
 import { Principal } from '@dfinity/principal';
 import { idlFactory as IndexFactory } from '../candid/js/index.did.js';
@@ -53,7 +53,6 @@ class IndexActorService {
 
     constructor() {
         this.indexActor = undefined;
-        this.identity = undefined;
         this.indexCanisterId = 'yak2b-tqaaa-aaaag-qnhmq-cai';
         this.eventCanisterId = 'yhl4v-6iaaa-aaaag-qnhma-cai';
         this.konectaCanisterId = 'eyark-fqaaa-aaaag-qm7oa-cai';
@@ -76,9 +75,7 @@ class IndexActorService {
      */
     private checkActor(): IndexActor {
         if (!this.indexActor) {
-            throw new Error(
-                'Index actor not initialized. Please call init() or initV2() first.',
-            );
+            throw new Error('Index actor not initialized. Please call init() first.');
         }
         return this.indexActor;
     }
@@ -87,72 +84,11 @@ class IndexActorService {
     // ## Core Initialization & Session Management
     // ===================================================================
 
-    async initV2(
-        agent: HttpAgent,
-        identity: Identity,
-    ): Promise<LoginAttemptResponseV2 | undefined> {
-        if (this.isInitialized) {
-            console.log("INDEX_SERVICE_INIT_V2: Already initialized, skipping re-initialization.");
-            const userCanisterId = this.userCanisterId;
-            if (!userCanisterId) {
-                return { type: 'signup_required', success: true, userCanisterId: undefined };
-            }
-            return { type: 'login', success: true, userCanisterId };
-        }
-
-        console.log("INDEX_SERVICE_INIT_V2: Function started.");
-        this.identity = identity;
-
-        if (process.env.NODE_ENV === 'development') {
-            console.log("INDEX_SERVICE_INIT_V2: Fetching root key for development environment.");
-            await agent.fetchRootKey();
-        }
-
+    public async init(agent: Agent): Promise<void> {
         this.indexActor = Actor.createActor<IndexActor>(IndexFactory, {
             agent,
             canisterId: this.indexCanisterId,
         });
-        console.log("INDEX_SERVICE_INIT_V2: Index actor created for canister:", this.indexCanisterId);
-
-        try {
-            const principal = identity.getPrincipal();
-            console.log(`INDEX_SERVICE_INIT_V2: Calling isUserRegistered() with principal: ${principal.toText()}`);
-
-            // 1. Call the more explicit function to check registration status.
-            const registrationStatus = await this.isUserRegistered(principal);
-            console.log("INDEX_SERVICE_INIT_V2: isUserRegistered response:", registrationStatus);
-
-            // 2. Check for the 'err' variant, which indicates the user is not registered.
-            if ('err' in registrationStatus) {
-                console.log("INDEX_SERVICE_INIT_V2: User not registered. Returning 'signup_required'. Message:", registrationStatus.err.message);
-                return {
-                    type: 'signup_required',
-                    success: true,
-                    userCanisterId: undefined,
-                };
-            }
-
-            // 3. If 'ok', the user is registered. Hydrate the service state with the response data.
-            const registrationData = registrationStatus.ok;
-            const userCanisterId = registrationData.canister_id.toText();
-
-            this.isInitialized = true;
-            this.userCanisterId = userCanisterId;
-            this.userSubaccLedgerIdentifier = registrationData.subaccount_ledger_identifier[0] ?? undefined;
-            this.userSubaccountHex = registrationData.subaccount_id_hex[0] ?? undefined;
-
-            console.log("INDEX_SERVICE_INIT_V2: User is registered. User canister ID:", userCanisterId);
-            localStorage.setItem('userCanisterId', userCanisterId);
-
-            return {
-                type: 'login',
-                success: true,
-                userCanisterId,
-            };
-        } catch (error) {
-            console.error("INDEX_SERVICE_INIT_V2: Error during isUserRegistered() call:", error);
-            throw error;
-        }
     }
 
     async attemptUserActorInit(agent: HttpAgent): Promise<boolean> {
@@ -197,7 +133,10 @@ class IndexActorService {
     async userSignUp(userName: string): Promise<string> {
         const result = await this.checkActor().signUp(userName);
         if ('ok' in result) {
-            return result.ok;
+            // The backend returns the new user canister ID upon successful signup
+            const canisterId = await this.checkActor().getUserCanister();
+            this.userCanisterId = canisterId;
+            return canisterId;
         }
         throw new Error(result.err ?? 'Unknown error during signUp');
     }
@@ -235,8 +174,8 @@ class IndexActorService {
         return this.checkActor().getUserCanister();
     }
 
-    async isUserRegistered(principal: Principal): Promise<RegistrationCheckResult> {
-        return this.checkActor().isUserRegistered(principal);
+    async isUserRegistered(): Promise<RegistrationCheckResult> {
+        return this.checkActor().isUserRegistered();
     }
 
     async getUserCanisterByUserPrincipal(principalId: string): Promise<string> {

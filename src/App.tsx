@@ -1,167 +1,176 @@
-import { BrowserRouter as Router, Route, Routes, useLocation, useNavigate } from 'react-router-dom'
-import 'slick-carousel/slick/slick.css'
-import 'slick-carousel/slick/slick-theme.css'
-import '@fortawesome/fontawesome-free/css/all.min.css'
-import Layout from './components/Layout/index.tsx'
-import Landing from './views/Landing/index.tsx'
-import PageNotFound from './views/PageNotFound/index.tsx'
-import Help from './views/Help/index.tsx'
-import Calendar from './views/Calendar/index.tsx'
-import Feed from './views/Feed/index.tsx'
-import Chats from './views/Chats/index.tsx'
-import Settings from './views/Settings/index.tsx'
-import CreateEvent from './views/CreateEvent/index.tsx'
-import EditProfile from './views/EditProfile/index.tsx'
-import EventDetail from './views/EventDetail/index.tsx'
-import { useAppDispatch, useAppSelector } from './reduxStore/hooks.tsx'
-import Spinner from './components/Spinner/index.tsx'
-import indexActorServiceInstance from './services/indexService.tsx'
-import { useEffect, useRef, useState } from 'react'
-import UserProfile from 'views/UserProfile/UserProfile.tsx'
-import LoginPage from 'views/LoginPage/index.tsx'
-import '@nfid/identitykit/react/styles.css'
-import { IdentityKitProvider, useIdentityKit } from '@nfid/identitykit/react'
-import { NFIDW, IdentityKitAuthType } from '@nfid/identitykit'
-import { setIdentity, setLoader, setPrincipalId, setSignUpRequired, resetAuthState } from 'reduxStore/auth/authAction.tsx'
-import { saveUserProfile } from 'reduxStore/user/userAction.tsx'
-import userActorServiceInstance from './services/userService.tsx'
-import eventActorServiceInstance from './services/eventService.tsx'
-import konectaActorServiceInstance from './services/konectaService.tsx'
-import { HttpAgent } from '@dfinity/agent'
+import { BrowserRouter as Router, Route, Routes, useLocation, useNavigate, Navigate } from 'react-router-dom';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+import '@fortawesome/fontawesome-free/css/all.min.css';
+import Layout from './components/Layout/index.tsx';
+import Landing from './views/Landing/index.tsx';
+import PageNotFound from './views/PageNotFound/index.tsx';
+import Help from './views/Help/index.tsx';
+import Calendar from './views/Calendar/index.tsx';
+import Feed from './views/Feed/index.tsx';
+import Chats from './views/Chats/index.tsx';
+import Settings from './views/Settings/index.tsx';
+import CreateEvent from './views/CreateEvent/index.tsx';
+import EditProfile from './views/EditProfile/index.tsx';
+import EventDetail from './views/EventDetail/index.tsx';
+import { useAppDispatch, useAppSelector } from './reduxStore/hooks.tsx';
+import Spinner from './components/Spinner/index.tsx';
+import indexActorServiceInstance from './services/indexService.tsx';
+import { useEffect, useRef, useState, useCallback, JSX } from 'react';
+import UserProfile from 'views/UserProfile/UserProfile.tsx';
+import LoginPage from 'views/LoginPage/index.tsx';
+import '@nfid/identitykit/react/styles.css';
+import { IdentityKitProvider, useIdentityKit, useAuth, useIsInitializing, useAgent, useIdentity } from '@nfid/identitykit/react';
+import { IdentityKitAuthType } from '@nfid/identitykit';
+import { setIdentity, setLoader, setPrincipalId, setSignUpRequired, resetAuthState } from 'reduxStore/auth/authAction.tsx';
+import { saveUserProfile } from 'reduxStore/user/userAction.tsx';
+import userActorServiceInstance from './services/userService.tsx';
+import eventActorServiceInstance from './services/eventService.tsx';
+import konectaActorServiceInstance from './services/konectaService.tsx';
+import { HttpAgent, Actor } from '@dfinity/agent';
+import { Principal } from '@dfinity/principal';
+import { idlFactory as IndexFactory } from './candid/js/index.did.js';
 
 const AppLoader = () => {
-  const loader = useAppSelector((state) => state.auth.loader)
+  const loader = useAppSelector((state) => state.auth.loader);
   return loader ? (
     <div className="top-0 left-0 z-[2000] absolute flex justify-center items-center w-screen h-screen">
       <Spinner size="medium" />
     </div>
-  ) : null
-}
+  ) : null;
+};
 
-const AppContent = ({ targets }: { targets: string[] }) => {
-  const dispatch = useAppDispatch()
-  const navigate = useNavigate()
-  const location = useLocation()
-  const { identity, disconnect } = useIdentityKit()
-  const pid = useAppSelector(state => state.auth.pid)
-  const isInitializing = useRef(false)
+const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
+  const {
+    user: nfidUser,
+  } = useAuth();
+
+  const isAuthenticated = !!nfidUser;
+  const isInitializing = useIsInitializing();
+
+  if (isInitializing) {
+    return <div className="w-full h-screen flex justify-center items-center"><Spinner size="medium" /></div>;
+  }
+
+  if (!isAuthenticated) {
+    return <Navigate to="/landing" replace />;
+  }
+
+  return children;
+};
+
+const AppContent = ({ setTargets, targets }: { setTargets: React.Dispatch<React.SetStateAction<string[]>>, targets: string[] }) => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const { disconnect } = useAuth();
+  const {
+    user: nfidUser,
+  } = useAuth();
+
+  const isAuthenticated = !!nfidUser;
+  const isInitializing = useIsInitializing();
+  const agent = useAgent();
+  const identity = useIdentity();
+
+  const pid = useAppSelector(state => state.auth.pid);
+  const hasCheckedRegistration = useRef(false);
+
+  const handleLogout = useCallback(async () => {
+    await disconnect();
+    dispatch(resetAuthState());
+    indexActorServiceInstance.reset();
+    navigate('/landing');
+  }, [disconnect, dispatch, navigate]);
 
   useEffect(() => {
-    const rehydrateAndLogin = async (currentLocation: typeof location) => {
-      if (identity && !pid && !isInitializing.current) {
-        isInitializing.current = true
-        dispatch(setLoader(true))
-        console.log("APP_CONTENT_FLOW: Identity detected. Starting session initialization...")
+    const checkRegistrationAndLogin = async () => {
+      if (isInitializing || !isAuthenticated || !agent || !identity || hasCheckedRegistration.current) {
+        return;
+      }
 
-        if (identity.getPrincipal().toText() === '2vxsx-fae') {
-          console.warn("APP_CONTENT_FLOW: Anonymous principal detected. Disconnecting.")
-          disconnect()
-          dispatch(setLoader(false))
-          isInitializing.current = false
-          return
-        }
+      hasCheckedRegistration.current = true;
+      dispatch(setLoader(true));
+      console.log("APP_CONTENT_FLOW: Identity detected. Starting session initialization...");
 
-        try {
-          const agent = new HttpAgent({ identity, host: 'https://ic0.app' })
-          if (process.env.NODE_ENV === 'development') {
-            await agent.fetchRootKey()
+      try {
+        await indexActorServiceInstance.init(agent);
+        const principal = identity.getPrincipal();
+        console.log(`APP_CONTENT_FLOW: Calling isUserRegistered() with principal: ${principal.toText()}`);
+
+        const registrationStatus = await indexActorServiceInstance.isUserRegistered();
+        console.log("APP_CONTENT_FLOW: isUserRegistered response:", registrationStatus);
+
+        if ('err' in registrationStatus) {
+          console.log("APP_CONTENT_FLOW: Signup is required.");
+          dispatch(setSignUpRequired(true));
+          if (location.pathname !== '/login') {
+            navigate('/login');
           }
-          const initResponse = await indexActorServiceInstance.initV2(agent, identity)
-          console.log("APP_CONTENT_FLOW: initV2 response:", initResponse)
+        } else {
+          const { canister_id } = registrationStatus.ok;
+          const userCanisterId = canister_id.toText();
+          console.log("APP_CONTENT_FLOW: User registered with canister:", userCanisterId);
 
-          if (!initResponse) {
-            throw new Error("Initialization failed: initV2 returned undefined.")
-          }
-
-          if (initResponse.type === 'signup_required') {
-            console.log("APP_CONTENT_FLOW: Signup is required.")
-            dispatch(setSignUpRequired(true))
-            if (currentLocation.pathname !== '/login') {
-              navigate('/login');
+          setTargets(prevTargets => {
+            if (prevTargets.includes(userCanisterId)) {
+              console.log("APP_CONTENT_FLOW: User canister already in delegation targets.");
+              return prevTargets;
             }
-          } else if (initResponse.type === 'login' && initResponse.success && initResponse.userCanisterId) {
-            console.log("APP_CONTENT_FLOW: Login successful. Hydrating state.")
-            const principal = identity.getPrincipal().toText()
-            dispatch(setPrincipalId(principal))
-            dispatch(setIdentity(identity))
+            console.log("APP_CONTENT_FLOW: User canister NOT in targets. Adding and preparing for re-login.");
+            localStorage.setItem('userCanisterId', userCanisterId);
+            localStorage.setItem('showLoginInfoModal', 'true');
+            handleLogout();
+            return [...prevTargets, userCanisterId];
+          });
 
-            const userCanisterId = initResponse.userCanisterId;
-            const { eventCanisterId, konectaCanisterId } = indexActorServiceInstance;
-
-            if (!eventCanisterId || !konectaCanisterId) {
-              throw new Error("Core canister IDs (event, konecta) are missing after initialization.");
-            }
+          // If canister was already a target, we proceed
+          if (targets.includes(userCanisterId)) {
+            dispatch(setPrincipalId(principal.toText()));
+            dispatch(setIdentity(identity));
 
             await userActorServiceInstance.initWithAgent(userCanisterId, agent);
-            await eventActorServiceInstance.init(eventCanisterId, identity);
-            await konectaActorServiceInstance.init(konectaCanisterId, identity);
+            await eventActorServiceInstance.init(indexActorServiceInstance.eventCanisterId, identity);
+            await konectaActorServiceInstance.init(indexActorServiceInstance.konectaCanisterId, identity);
 
-            // Check for profile before navigating
-            const userProfile = await userActorServiceInstance.getUser()
+            const userProfile = await userActorServiceInstance.getUser();
             if (userProfile) {
-              // User has a profile, proceed to intended destination
-              dispatch(saveUserProfile(userProfile))
-              console.log("APP_CONTENT_FLOW: Existing user profile found. Navigating to calendar/redirect path.")
-              if (currentLocation.pathname === '/login' || currentLocation.pathname === '/' || currentLocation.pathname === '/landing') {
-                const searchParams = new URLSearchParams(currentLocation.search);
-                const redirectTo = searchParams.get('redirectTo') || '/calendar';
-                navigate(redirectTo, { replace: true });
-              }
+              dispatch(saveUserProfile(userProfile));
+              console.log("APP_CONTENT_FLOW: Profile found. Navigating to calendar.");
+              navigate('/calendar', { replace: true });
             } else {
-              // New user, needs to create a profile
-              console.log("APP_CONTENT_FLOW: New user detected, navigating to /edit-profile.");
-              navigate('/edit-profile', { replace: true })
+              console.log("APP_CONTENT_FLOW: No profile found. Navigating to edit-profile.");
+              navigate('/edit-profile', { replace: true });
             }
-          } else {
-            throw new Error(`Unhandled initialization response: ${JSON.stringify(initResponse)}`)
           }
-        } catch (error) {
-          console.error("APP_CONTENT_FLOW: Error during session initialization:", error);
-
-          const errorMessage = String(error);
-          const match = errorMessage.match(/Canister '([a-z0-9-]+)' is not one of the delegation targets/);
-
-          if (match && match[1]) {
-            const missingCanisterId = match[1];
-            console.log(`APP_CONTENT_FLOW: Detected missing delegation target: ${missingCanisterId}. Attempting re-login flow.`);
-
-            const lastAttempted = sessionStorage.getItem('lastReloadAttemptForCanister');
-            if (lastAttempted === missingCanisterId) {
-              console.error("APP_CONTENT_FLOW: Re-login loop detected. Aborting.");
-              disconnect();
-              indexActorServiceInstance.reset();
-              sessionStorage.removeItem('lastReloadAttemptForCanister');
-            } else {
-              localStorage.setItem('userCanisterId', missingCanisterId);
-              sessionStorage.setItem('lastReloadAttemptForCanister', missingCanisterId);
-              await disconnect();
-              window.location.reload();
-            }
-          } else {
-            console.error("APP_CONTENT_FLOW: An unrecoverable error occurred.");
-            disconnect();
-            indexActorServiceInstance.reset();
-          }
-        } finally {
-          dispatch(setLoader(false));
-          isInitializing.current = false;
         }
-      } else if (!identity && pid) {
-        dispatch(resetAuthState())
-        indexActorServiceInstance.reset();
+      } catch (error) {
+        console.error("APP_CONTENT_FLOW: Error during session initialization:", error);
+        await handleLogout();
+      } finally {
+        dispatch(setLoader(false));
       }
-    }
+    };
 
-    rehydrateAndLogin(location)
-  }, [identity, pid, dispatch, disconnect, navigate, targets])
+    checkRegistrationAndLogin();
+
+  }, [isAuthenticated, isInitializing, agent, identity, dispatch, navigate, location, handleLogout, setTargets]);
+
+  useEffect(() => {
+    if (!isAuthenticated && !isInitializing) {
+      hasCheckedRegistration.current = false;
+    }
+  }, [isAuthenticated, isInitializing]);
+
 
   return (
     <>
       <div className="app-container scrollbar">
         <Routes>
-          <Route path={'/landing'} element={<Landing setTargets={() => { }} />} />
-          <Route path={'/login'} element={<LoginPage setTargets={() => { }} />} />
-          <Route path={'/'} element={<Layout />}>
+          <Route path={'/landing'} element={<Landing setTargets={setTargets} />} />
+          <Route path={'/login'} element={<LoginPage setTargets={setTargets} />} />
+          <Route path={'/'} element={<ProtectedRoute><Layout /></ProtectedRoute>}>
             <Route path={'/calendar'} element={<Calendar />} />
             <Route path={'/create-event'} element={<CreateEvent />} />
             <Route path={'/feed'} element={<Feed />} />
@@ -178,38 +187,60 @@ const AppContent = ({ targets }: { targets: string[] }) => {
       </div>
       <AppLoader />
     </>
-  )
-}
+  );
+};
 
 const App = () => {
-  const [targets, setTargets] = useState(() => {
-    const initialTargets = [
-      indexActorServiceInstance.indexCanisterId,
-      indexActorServiceInstance.eventCanisterId,
-      indexActorServiceInstance.konectaCanisterId,
-    ];
-    const userCanisterId = localStorage.getItem('userCanisterId');
-    if (userCanisterId && !initialTargets.includes(userCanisterId)) {
-      initialTargets.push(userCanisterId);
-    }
-    return [...new Set(initialTargets)];
-  });
+  const [targets, setTargets] = useState<string[]>([]);
+  const [isLoadingTargets, setIsLoadingTargets] = useState(true);
+
+  useEffect(() => {
+    const fetchInitialTargets = async () => {
+      const agent = new HttpAgent({ host: "https://ic0.app" });
+      if (process.env.NODE_ENV !== "production") {
+        await agent.fetchRootKey();
+      }
+      const actor = Actor.createActor(IndexFactory, {
+        agent,
+        canisterId: indexActorServiceInstance.indexCanisterId,
+      });
+
+      // This is a placeholder; replace with actual method if available,
+      // otherwise, start with a base set of canisters.
+      const initialCanisters = [
+        indexActorServiceInstance.indexCanisterId,
+        indexActorServiceInstance.eventCanisterId,
+        indexActorServiceInstance.konectaCanisterId,
+      ];
+
+      const storedUserCanisterId = localStorage.getItem('userCanisterId');
+      if (storedUserCanisterId) {
+        initialCanisters.push(storedUserCanisterId);
+      }
+
+      setTargets([...new Set(initialCanisters)]);
+      setIsLoadingTargets(false);
+    };
+    fetchInitialTargets();
+  }, []);
+
+  if (isLoadingTargets) {
+    return <div className="w-full h-screen flex justify-center items-center"><Spinner size="medium" /></div>;
+  }
 
   return (
     <Router>
       <IdentityKitProvider
-        signers={[NFIDW]}
-        featuredSigner={NFIDW}
+        authType={IdentityKitAuthType.DELEGATION}
         signerClientOptions={{
           targets,
-          idleOptions: { idleTimeout: 8640000000 },
+          idleOptions: { disableIdle: true }
         }}
-        authType={IdentityKitAuthType.DELEGATION}
       >
-        <AppContent targets={targets} />
+        <AppContent setTargets={setTargets} targets={targets} />
       </IdentityKitProvider>
     </Router>
-  )
-}
+  );
+};
 
-export default App
+export default App;

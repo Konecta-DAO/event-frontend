@@ -19,7 +19,7 @@ import type {
 } from 'candid/ts/konecta.did.d.ts'
 import type { UpdateMultipleEventsPayload } from 'candid/ts/event.did.d.ts'
 import MultiEventFeedBack from 'components/Modals/MultiEventFeedBack/MultiEventFeedBack.tsx'
-import { useIdentityKit } from '@nfid/identitykit/react'
+import { useAuth, useIdentityKit } from '@nfid/identitykit/react'
 import FloatingEventProgress from 'components/FloatingEventProgress/index.tsx'
 import { Principal } from '@dfinity/principal'
 import type { UserPayload } from 'candid/ts/user.did.d.ts'
@@ -68,7 +68,11 @@ export default function Layout() {
   const userData = useAppSelector(
     (state) => state.user.userProfile as UserPayload,
   )
-  const isAuthenticated = Boolean(identity)
+  const {
+    user: nfidUser,
+  } = useAuth();
+
+  const isAuthenticated = !!nfidUser;
 
   const handleFeedbackSubmit = async (feedbackRequests: any) => {
     try {

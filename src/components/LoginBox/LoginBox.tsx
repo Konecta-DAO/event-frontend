@@ -1,30 +1,27 @@
-import React from 'react'
-
-import { Close } from '@mui/icons-material'
-import { Box, SxProps, Theme } from '@mui/material'
-
-import GoogleLoginIcon from 'assets/svg/googleLogin.svg'
-import LogoIcon from 'assets/svg/logo.svg'
-import { ConnectWallet } from '@nfid/identitykit/react'
+import React from 'react';
+import { Box, SxProps, Theme } from '@mui/material';
+import { Close } from '@mui/icons-material';
+import GoogleLoginIcon from 'assets/svg/googleLogin.svg';
+import LogoIcon from 'assets/svg/logo.svg';
+import { ConnectWallet, useAuth, useIsInitializing } from '@nfid/identitykit/react';
+import Spinner from 'components/Spinner/index.tsx';
 
 interface LoginBoxProps {
-  style?: SxProps<Theme>
-  onClose?: React.MouseEventHandler<HTMLButtonElement>
-  showCloseButton?: boolean
-  onSignUpRequired: () => void
-  onLoginSuccess: () => void
+  style?: SxProps<Theme>;
+  onClose?: React.MouseEventHandler<HTMLButtonElement>;
+  showCloseButton?: boolean;
 }
 
 const LoginBox = (props: LoginBoxProps) => {
-  const {
-    style,
-    onClose,
-    showCloseButton = false,
-  } = props
-
+  const { style, onClose, showCloseButton = false } = props;
   const connectWalletRef = React.useRef<HTMLDivElement>(null);
 
+  const { isConnecting } = useAuth();
+  const isInitializing = useIsInitializing();
+  const isLoading = isConnecting || isInitializing;
+
   const handleConnect = () => {
+    if (isLoading) return; // Prevent clicks while loading
     if (connectWalletRef.current) {
       const button = connectWalletRef.current.querySelector('button');
       if (button) {
@@ -52,21 +49,21 @@ const LoginBox = (props: LoginBoxProps) => {
           <div
             onClick={handleConnect}
             className="flex justify-between items-center bg-[#29283C] max-md:py-[8px] p-[11px_16px] rounded-[11px] w-full h-[60px] max-md:text-[13px] cursor-pointer"
+            style={{ opacity: isLoading ? 0.7 : 1 }}
           >
-            <p>NFID & Google</p>
-            <img src={GoogleLoginIcon} alt="google" />
+            {isLoading ? <p>Connecting...</p> : <p>NFID & Google</p>}
+            {isLoading ? <Spinner size="small" /> : <img src={GoogleLoginIcon} alt="google" />}
           </div>
         </div>
-
         <p className="mt-[-8px] mb-[34px] max-md:mb-[20px] text-center max-md:text-[13px]">
           By signing up, you agree to our Terms of Service and Privacy Policy
         </p>
-        <div ref={connectWalletRef} style={{ visibility: 'hidden' }}>
+        <div ref={connectWalletRef} style={{ display: 'none' }}>
           <ConnectWallet />
         </div>
       </div>
     </Box>
-  )
-}
+  );
+};
 
-export default LoginBox
+export default LoginBox;
