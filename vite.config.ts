@@ -8,23 +8,14 @@ dotenv.config()
 export default defineConfig({
   root: 'src',
   build: {
-    outDir: '../dist',
+    outDir: '../build',
     emptyOutDir: true,
   },
   optimizeDeps: {
-    esbuildOptions: {
-      define: {
-        global: 'globalThis',
-      },
-    },
+    esbuildOptions: { define: { global: 'globalThis' } },
   },
   server: {
-    proxy: {
-      '/api': {
-        target: 'http://127.0.0.1:4943',
-        changeOrigin: true,
-      },
-    },
+    proxy: { '/api': { target: 'http://127.0.0.1:4943', changeOrigin: true } },
   },
   plugins: [
     react(),
@@ -32,5 +23,5 @@ export default defineConfig({
     environment('all', { prefix: 'DFX_' }),
     environment({ BACKEND_CANISTER_ID: '' }),
     tsconfigPaths(),
-  ]
+  ],
 })
