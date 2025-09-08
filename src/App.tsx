@@ -99,6 +99,8 @@ const AppContent = ({ setTargets, targets }: { setTargets: React.Dispatch<React.
         const principal = identity.getPrincipal();
         console.log(`APP_CONTENT_FLOW: Calling isUserRegistered() with principal: ${principal.toText()}`);
 
+        localStorage.setItem('principalId', principal.toText());
+
         const registrationStatus = await indexActorServiceInstance.isUserRegistered();
         console.log("APP_CONTENT_FLOW: isUserRegistered response:", registrationStatus);
 

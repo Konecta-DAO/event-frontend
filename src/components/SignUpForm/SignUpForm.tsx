@@ -15,9 +15,9 @@ import userActorServiceInstance from 'services/userService.tsx'
 import { countries, timezones } from 'utils/values.tsx'
 
 interface Props {
-  handleClose: () => void
-  onSignUpSuccess: () => void
-  style?: SxProps<Theme>
+  handleClose: () => void,
+  onSignUpSuccess: () => void,
+  style?: SxProps<Theme>,
   setTargets: React.Dispatch<React.SetStateAction<string[]>>
 }
 
@@ -43,10 +43,14 @@ interface SignUpInputs {
  */
 const handleNewUserCreationAction = ({
   data,
+  profileImageFile,
   onSignUpSuccess,
+  agent
 }: {
-  data: SignUpInputs
-  onSignUpSuccess: () => void
+  data: SignUpInputs,
+  profileImageFile: File | null,
+  onSignUpSuccess: () => void,
+  agent: Agent
 }) => {
   return async (dispatch: any) => {
     try {
@@ -63,9 +67,37 @@ const handleNewUserCreationAction = ({
       console.log('NEW_USER_FLOW: New user canister created:', newUserCanisterId)
 
       // 2. Store the new ID so the IdentityKitProvider can find it after the required page reload.
-      localStorage.setItem('userCanisterId', newUserCanisterId)
+      localStorage.setItem('userCanisterId', newUserCanisterId);
 
-      // 3. Trigger the success callback, which handles the logout/reload flow.
+      // 3. Initialize the user actor with the new canister ID.
+      const userCanisterId = indexActorServiceInstance.userCanisterId;
+      if (!userCanisterId) {
+        throw new Error('User canister ID not found. Cannot complete profile.')
+      }
+      await userActorServiceInstance.initWithAgent(userCanisterId, agent);
+
+      // 4. Upsert the full profile details.
+      const upsertPayload: any = {
+        firstname: data.firstName,
+        lastname: data.lastName,
+        username: data.userName,
+        email: data.email,
+        country: data.country,
+        timezone: data.timezone,
+        bio: data.bio ? [data.bio] : [],
+        categories: data.categories || [],
+        introduction_video_link: data.introductionvideolink,
+        profilepic: profileImageFile,
+        coverphoto: null,
+      };
+
+      await userActorServiceInstance.upsertUser(upsertPayload);
+      const updatedProfile = await userActorServiceInstance.getUser();
+      if (updatedProfile) {
+        dispatch(saveUserProfile(updatedProfile))
+      }
+
+      // 5. Trigger the success callback, which handles the logout/reload flow.
       onSignUpSuccess()
     } catch (e) {
       console.error('An error occurred during new user creation:', e)
@@ -97,7 +129,7 @@ const handleProfileCompletionAction = ({
       dispatch(setLoader(true))
       console.log('PROFILE_COMPLETION_FLOW: Starting profile completion...')
 
-      const userCanisterId = indexActorServiceInstance.userCanisterId
+      const userCanisterId = indexActorServiceInstance.userCanisterId;
       if (!userCanisterId) {
         throw new Error('User canister ID not found. Cannot complete profile.')
       }
@@ -142,17 +174,24 @@ const SignUpForm = ({
   const isonTabletOrMobile = useMediaQuery('(max-width: 768px)')
   const dispatch = useAppDispatch()
   const agent = useAgent()
+  const principalId = localStorage.getItem('principalId');
   const [selectedImageFile, setSelectedImageFile] = useState<File | null>(null)
   const [profileImageError, setProfileImageError] = useState<string>('')
 
-  const handleNFIDSignUp = (data: SignUpInputs) => {
+  console.log(principalId);
+
+  const handleNFIDSignUp = async (data: SignUpInputs) => {
     if (!agent) {
       console.error('Agent not available.')
       return
     }
 
     // This is the key logic that differentiates between the two flows.
-    const existingUserCanisterId = indexActorServiceInstance.userCanisterId
+    const existingUserCanisterId = indexActorServiceInstance.userCanisterId;
+    const isUserExisting = await indexActorServiceInstance.getUserCanisterByUserPrincipal(principalId || "");
+
+    console.log(existingUserCanisterId);
+    console.log(isUserExisting);
 
     if (existingUserCanisterId) {
       // Flow 2: The user exists, so we just complete their profile.
@@ -173,7 +212,9 @@ const SignUpForm = ({
       dispatch(
         handleNewUserCreationAction({
           data,
+          profileImageFile: selectedImageFile,
           onSignUpSuccess,
+          agent,
         }),
       )
     }
