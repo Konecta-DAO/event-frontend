@@ -236,7 +236,7 @@ const EventForm = ({ }: { handleClose?: () => void }) => {
       const eventPayload: EventRequestPayload = {
         categories: data.categories || [],
         status: { Created: null },
-        token_amount: [data.price || 0],
+        token_amount: [Number(data.price) || 0],
         price_token: data.priceCourse === 'ICP' ? [{ 'ICP': null }] :
           data.priceCourse === 'CKBTC' ? [{ 'CKBTC': null }] :
             data.priceCourse === 'FREE' ? [{ 'FREE': null }] :
@@ -279,7 +279,7 @@ const EventForm = ({ }: { handleClose?: () => void }) => {
       navigate('/calendar');
 
     } catch (e) {
-      console.error('Event form submission error:', e);
+      console.error('Event form submission error:', e); //
       setShowSuccess(0);
     } finally {
       dispatch(setLoader(false));
